@@ -38,8 +38,6 @@ debug.log*
 *.sw?
 
 # Frontend-specific ignore
-frontend/build
-frontend/dist
 frontend/node_modules
 frontend/.next
 frontend/out
