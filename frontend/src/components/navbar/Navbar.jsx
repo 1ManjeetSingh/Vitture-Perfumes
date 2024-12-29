@@ -12,10 +12,10 @@ const Navbar = () => {
             <div>
                 <img src={vImage} alt="V" />
             </div>
-            <h1>VITTURÉ</h1>
+            <h1 className='text-lg sm:text-2xl'>VITTURÉ</h1>
             <div>
-                <Link to="/profile"><FontAwesomeIcon icon={faUser} className='fontawesome profile' /></Link>
-                <Link to="/cart"><FontAwesomeIcon icon={faCartShopping} className='fontawesome cart' /></Link>
+                <Link to="/profile"><FontAwesomeIcon icon={faUser} className='fontawesome profile w-5 h-5' /></Link>
+                <Link to="/cart"><FontAwesomeIcon icon={faCartShopping} className='fontawesome cart w-5 h-5' /></Link>
                 <Link to="/menu"><FontAwesomeIcon icon={faBars} className='fontawesome menu' /></Link>
             </div>
         </nav>

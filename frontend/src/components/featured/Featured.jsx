@@ -57,7 +57,7 @@ const Featured = () => {
                             </Link>
                         ))
                     ) : (
-                        <p>No products available.</p>
+                        <p>fetching products...</p>
                     )}
                 </div>
             </section>

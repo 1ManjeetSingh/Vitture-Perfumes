@@ -26,7 +26,7 @@ const ProductDetails = ({ product }) => {
 
     return (
         <div className='inline-component'>
-            <div className="productContainer min-w-[400px]">
+            <div className="productContainer">
                 <h1>{product.name}</h1>
                 <p className="sub-heading">{product.flavour || "Product Category"}</p>
 

@@ -14,7 +14,8 @@
 }
 
 .slick-slide img {
-    width: 100%;  
+    margin-inline: auto;
+    width: 80%;  
     height: auto;  /* Maintain aspect ratio */
     object-fit: cover;  /* Optional: Crop to fit the box */
 }
