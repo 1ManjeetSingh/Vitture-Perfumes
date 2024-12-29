@@ -1,0 +1,153 @@
+/* Product Showcase Styles */
+.showcase {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+    gap: 10px;
+  }
+
+.showcase > h2{
+  margin-top: 30px;
+  font-family: serif;
+  text-decoration: underline;
+}
+
+  .searchBar {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 0 gray;
+}
+
+.searchBar input {
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: -4px;
+    border: none;
+    outline: none;
+    /* flex-grow: 1; */
+    background: transparent;
+    color: #111;
+}
+
+.searchBar span.underline {
+    width: 0;
+    height: 0.5px;
+    background-color: #111;
+    position: absolute;
+    bottom: 0;
+    transition: width 0.5s ease-out;
+}
+
+.searchBar > input:focus ~ span.underline {
+    width: 100%;
+}
+  
+  .container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-block: 30px;
+    gap: 40px;
+  }
+  
+  
+  .product-card {
+    width: 250px;
+    background-color: #f9f9f9;
+    color: black;
+    text-decoration: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    /* Add Transition Property here */
+      transition: transform 0.3s ease;
+  }
+  
+  /* Add effects by hovering over product-card below */
+  .product-card:hover{
+      transform: translateY(-5px);
+  }
+  
+  .product-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    border-radius: 10px;
+     /* Add Transition Property here */
+      transition: opacity 0.3s ease;
+  }
+  
+  .product-card:hover::before {
+    opacity: 1;
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+  }
+  
+  .product-card h3,
+  .product-card p {
+    margin: 10px;
+  }
+  
+  .cta-button {
+    text-align: center;
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+     /* Add Transition Property here */
+      transition: bottom 0.3s ease;
+  }
+  
+  .product-card:hover .cta-button {
+    bottom: 80px;
+  }
+  
+  .cta-button > .anchor {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .cta-button > .anchor:hover {
+    background-color: #333;
+  }
+  
+  .product-card:hover .popup {
+    display: block;
+  }
+
+  .product-card > span:first-child{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 1rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color: green;
+  }
+
+  @media (max-width:536px) {
+    .product-card::before{
+      display: none;
+    }
+    .cta-button{
+      display: none;
+    }
+  }

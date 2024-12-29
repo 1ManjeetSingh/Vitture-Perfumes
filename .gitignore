@@ -1,0 +1,69 @@
+# Root-level ignore
+.DS_Store
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# Ignore coverage and build artifacts
+/coverage
+/build
+/dist
+/dist-ssr
+
+# Node modules (common for frontend and backend)
+**/node_modules
+/.pnp
+.pnp.js
+
+# Logs
+logs
+*.log
+*.log.*
+debug.log*
+
+# Editor and OS-specific files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Frontend-specific ignore
+frontend/build
+frontend/dist
+frontend/node_modules
+frontend/.next
+frontend/out
+frontend/.nuxt
+frontend/.cache
+frontend/.parcel-cache
+
+# Backend-specific ignore
+backend/node_modules
+backend/.pnp
+backend/build
+backend/dist
+backend/tmp
+
+# Ignore lockfiles (optional if you prefer a single lockfile in the root)
+frontend/package-lock.json
+frontend/yarn.lock
+backend/package-lock.json
+backend/yarn.lock
+
+# Ignore sensitive env files
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+backend/.env
+backend/.env.local
+backend/.env.*.local

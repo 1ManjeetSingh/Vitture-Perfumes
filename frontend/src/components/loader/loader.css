@@ -1,0 +1,56 @@
+/* Center the loader in the middle of the page */
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9; /* Optional background for contrast */
+    position: relative;
+}
+
+/* Base styles for half-circular rings */
+.half-circle-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    border-top-color: #3498db; /* Color of the rotating arcs */
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+/* Custom sizes, speeds, and directions for each ring */
+.ring1 {
+    width: 40px;
+    height: 40px;
+    animation: rotateClockwise 1.5s infinite;
+}
+
+.ring2 {
+    width: 60px;
+    height: 60px;
+    animation: rotateCounterClockwise 2s infinite;
+}
+
+.ring3 {
+    width: 80px;
+    height: 80px;
+    animation: rotateClockwise 2.5s infinite;
+}
+
+.ring4 {
+    width: 100px;
+    height: 100px;
+    animation: rotateCounterClockwise 3s infinite;
+}
+
+/* Keyframes for clockwise rotation */
+@keyframes rotateClockwise {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Keyframes for counter-clockwise rotation */
+@keyframes rotateCounterClockwise {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}

@@ -1,0 +1,58 @@
+/* src/styles/product.css */
+.product-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+}
+
+.product-row > * {
+    flex: 1;
+    max-width: 45%;
+}
+
+.home-icon{
+    color: #111;
+    position: absolute;
+    top: 5rem;
+    left: 2rem;
+    z-index: 1;
+}
+.share-icon{
+    color: #111;
+    position: absolute;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    top: 5rem;
+    right: 2rem; 
+    z-index: 1;
+}
+
+.home{
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: all 0.2s linear;
+}
+.share{
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: all 0.2s linear;
+}
+
+.home:hover,.share:hover{
+    transform: scale(1.1);
+    color: rgb(108, 92, 0);
+}
+
+@media (max-width: 868px) {
+    .product-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-row > * {
+        max-width: 100%; /* Full width for smaller screens */
+    }
+}

@@ -1,0 +1,120 @@
+*{
+    scroll-behavior: smooth;
+}
+
+.featuredProducts{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin-inline: auto;
+    /* margin-top: -5vh; */
+}
+
+.highlights{
+    margin: 20px auto;
+    width: 80% !important;
+    height: 45vh;
+    overflow: hidden;
+}
+
+.highlights > img {
+        border: none;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+        transform: translateY(-5%);
+        filter: brightness(70%);
+}
+
+.offer-heading{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #eee;
+    top: 15vh;
+    left: 12vw;
+}
+
+.offer-heading > span{
+    width: 45vw;
+    height: 2px;
+    background-color: #eee;
+    padding: auto 0;
+    margin: 5px 0 0 20px;
+    z-index: 1;
+}
+
+.highlights > .offer-link{
+    position: absolute;
+    top: 30vh;
+    left: 12vw;
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #eee;
+    text-decoration: none;
+    overflow: hidden;
+    padding: 10px;
+    transition: transform 0.3s ease-out;
+}
+
+.highlights > .offer-link:hover{
+    transform: scale(1.05);
+}
+
+@keyframes border1{
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(100%);
+    }
+}
+
+@keyframes border3{
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(-100%);
+    }
+}
+
+
+.offer-link > span:nth-of-type(1){
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right,rgba(0,0,0,0),rgb(255, 255, 255));
+    animation: border1 10s linear infinite;
+}
+
+.offer-link > span:nth-of-type(3){
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to left,rgba(0,0,0,0),rgb(255, 255, 255));
+    animation: border3 10s linear infinite 5s;
+}
+
+@media (max-width:768px) {
+    .highlights{
+        height: 30vh;
+    }
+    .offer-heading{
+        top: 12vh;
+        font-size: 1.5rem;
+    }
+    .offer-heading > span{
+        width: 30vw;
+    }
+    .highlights > .offer-link{
+        top: 23vh;
+        font-size: 2rem;
+    }
+}
+

@@ -1,0 +1,84 @@
+footer {
+    background-color: #111;
+    color: #fff;
+    padding: 20px 40px;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-column h4 {
+    margin-bottom: 10px;
+  }
+  
+  .footer-column ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-column ul li {
+    margin-bottom: 5px;
+  }
+  
+  .footer-column ul li a {
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+     /* Add Transition Property here */
+      transition: color 0.3s ease-in-out;
+  }
+  
+  .footer-column ul li a::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #fff;
+     /* Add Transition Property here */
+      transition: width 0.3s ease-in-out;
+  }
+  
+  .footer-column ul li a:hover::before {
+    width: 100%;
+  }
+  
+  .footer-column ul li a:hover {
+    color: #c6c6c6;
+  }
+  
+  .social-icons {
+    display: flex;
+  }
+  
+  .social-icons li {
+    margin-right: 10px;
+  }
+  
+  .social-icons li a {
+    color: #fff;
+    font-size: 20px;
+    /* Add Transition Property here */
+      transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  .social-icons li a:hover {
+    color: #c6c6c6;
+     /* Add Transform Property here */
+      transform: scale(1.2);
+  }
+  
+  footer p {
+    text-align: center;
+    margin: 10px 0 0 0;
+  }

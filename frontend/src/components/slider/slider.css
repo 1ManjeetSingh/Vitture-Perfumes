@@ -1,0 +1,53 @@
+.image-slider {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;  /* Prevent slider overflow */
+}
+
+.slick-track {
+    display: flex;
+}
+
+.slick-slide {
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.slick-slide img {
+    width: 100%;  
+    height: auto;  /* Maintain aspect ratio */
+    object-fit: cover;  /* Optional: Crop to fit the box */
+}
+
+.product-image {
+    width: 100%;
+}
+
+.arrow {
+    background-color: rgba(255, 240, 158, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px; 
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    position: absolute;
+    top: 50%; 
+    transform: translateY(-50%); 
+}
+
+.prev {
+    left: 1px;
+}
+
+.next {
+    right: 1px;
+}
+
+.slick-slide div {
+    outline: none; 
+}
+
