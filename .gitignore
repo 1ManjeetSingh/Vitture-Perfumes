@@ -12,9 +12,6 @@ lerna-debug.log*
 
 # Ignore coverage and build artifacts
 /coverage
-/build
-/dist
-/dist-ssr
 
 # Node modules (common for frontend and backend)
 **/node_modules
