@@ -56,7 +56,7 @@
     color: #eee;
     text-decoration: none;
     overflow: hidden;
-    padding: 10px;
+    margin-right: 80px;
     transition: transform 0.3s ease-out;
 }
 
@@ -115,6 +115,19 @@
     .highlights > .offer-link{
         top: 23vh;
         font-size: 2rem;
+    }
+}
+
+@media (max-width:468px) {
+    .offer-heading{
+        top: 14vh;
+    }
+    .offer-heading > span{
+        width: 25vw;
+    }
+    .highlights > .offer-link{
+        top: 25vh;
+        font-size: 1.5rem;
     }
 }
 
