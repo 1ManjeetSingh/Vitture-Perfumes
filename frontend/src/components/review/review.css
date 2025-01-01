@@ -104,4 +104,7 @@ form.review-card:focus-within {
     .review-section,form.review-card{
         width: 100%;
     }
+    .review-card{
+        width: 95%;
+    }
 }
