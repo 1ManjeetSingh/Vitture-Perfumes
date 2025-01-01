@@ -139,7 +139,7 @@
     }
 }
 
-@media (max-width:533px) and (min-width: 361px) {
+@media (max-width:533px) and (min-width: 340px) {
     .highlights{
         height: 20vh;
     }
