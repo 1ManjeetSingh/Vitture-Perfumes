@@ -1,12 +1,9 @@
 /* src/styles/review.css */
 .review-section{
     width: 80%;
-    display: flex;
-    flex-direction: column;
     /* gap: 10px; */
-    align-items: center;
-    margin-inline: auto;
 }
+
 /* src/styles/review.css */
 .review-card {
     width: 100%;
@@ -14,12 +11,12 @@
     border-radius: 8px;
     padding: 10px;
     margin: 10px 0;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     position: relative; /* To align date at the right */
 }
 
 form.review-card{
-    width: 110%;
+    width: 120%;
     border-radius: 2px;
     background-color: #f1f0ed;
 }
@@ -101,4 +98,10 @@ form.review-card:focus-within {
 
 .send:hover{
     transform: scale(1.2);
+}
+
+@media (max-width: 468px) {
+    .review-section,form.review-card{
+        width: 100%;
+    }
 }

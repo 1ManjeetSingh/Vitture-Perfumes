@@ -9,9 +9,9 @@
   }
 
 .showcase > h2{
-  margin-top: 30px;
-  font-family: serif;
-  text-decoration: underline;
+  margin: 20px 0;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-decoration: none;
 }
 
   .searchBar {
@@ -51,7 +51,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    padding-block: 30px;
     gap: 40px;
   }
   
@@ -94,13 +93,13 @@
   
   .product-card img {
     width: 100%;
-    height: auto;
-    min-height: 200px;
+    height: 100%;
+    object-fit: contain;
   }
   
   .product-card h3,
   .product-card p {
-    margin: 10px;
+    margin: 5px;
   }
   
   .cta-button {
@@ -149,5 +148,14 @@
     }
     .cta-button{
       display: none;
+    }
+    .product-card{
+      width: 40vw;
+    }
+    .container{
+      gap: 5vw;
+    }
+    .showcase > h2{
+      margin: 10px 0;
     }
   }

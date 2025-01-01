@@ -27,23 +27,23 @@ const ProductDetails = ({ product }) => {
     return (
         <div className='inline-component'>
             <div className="productContainer">
-                <h1>{product.name}</h1>
-                <p className="sub-heading">{product.flavour || "Product Category"}</p>
+                <h1 className='leading-tight sm:leading-normal'>{product.name}</h1>
+                <p className="sub-heading leading-tight sm:leading-normal">{product.flavour || "Product Category"}</p>
 
-                <div className="rating">
+                <div className="rating leading-tight sm:leading-normal">
                     <span>⭐ 4.6</span>
                     <span>|</span>
                     <span>(1033 Reviews)</span>
                 </div>
 
-                <div className="priceSection">
+                <div className="priceSection leading-tight sm:leading-normal">
                     <p className="sale-price">₹ {salePrice}</p>
                     <p className="regular-price">MRP: ₹ {product.price}</p>
                     <p className="discount">-{product.discount}%</p>
                     <p className="inclusive-tax">Inclusive of all taxes</p>
                 </div>
 
-                <p className="description">
+                <p className="description leading-tight sm:leading-normal">
                     {isExpanded 
                         ? product.description
                         : `${product.description.slice(0, 100)}...`}
@@ -52,7 +52,7 @@ const ProductDetails = ({ product }) => {
                     </button>
                 </p>
 
-                <div className="quantity">
+                <div className="quantity leading-tight sm:leading-normal">
                     <button onClick={handleDecrease}>-</button>
                     <span>{quantity}</span>
                     <button onClick={handleIncrease}>+</button>

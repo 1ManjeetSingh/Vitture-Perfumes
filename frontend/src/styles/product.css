@@ -56,3 +56,10 @@
         max-width: 100%; /* Full width for smaller screens */
     }
 }
+
+@media (max-width: 768px) {
+    .product-row {
+        padding-inline: 0px;
+        gap: 0px;
+    }
+}

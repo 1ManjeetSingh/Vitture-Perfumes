@@ -147,3 +147,26 @@
         padding: 15px;
     }
 }
+@media (max-width: 468px) {
+    .productContainer {
+        max-width: 100%;
+        padding: 10px;
+    }
+    .sub-heading{
+        margin-bottom: 8px;
+        padding: 0;
+    }
+    .sale-price{
+        margin: 0;
+    }
+    .inclusive-tax{
+        margin: 0 0 10px 0;
+        padding: 0;
+    }
+    .description, .quantity, .productContainer h1{
+        padding: 0;
+    }
+    .quantity{
+        margin: 0;
+    }
+}

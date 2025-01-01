@@ -36,16 +36,17 @@ const Featured = () => {
                 </div>
                 <h2>Popular Products</h2>
                 <div className="container">
-                {Array.isArray(products) && products.length > 0 ? (
-                        products.map(product => (
+                        {products.map(product => (
                             <Link to={`/Product/${product._id}`} className="product-card" key={product._id}>
-                                <span>-{product.discount}%</span>
+                                <span className='text-sm sm:text-lg'>-{product.discount}%</span>
+                                <div>
                                 <img
                                     src={product.images.length > 0 ? `${import.meta.env.VITE_BACKEND_BASE_URL}/api/productImages/files/${product.images[0]}` : 'placeholder_image.jpg'}
                                     alt={product.name}
                                 />
-                                <h3>{product.name}</h3>
-                                <p>₹ <del>{product.price.toLocaleString()}</del>
+                                </div>
+                                <h3 className='text-sm sm:text-lg overflow-hidden whitespace-nowrap text-ellipsis'>{product.name}</h3>
+                                <p className='text-sm sm:text-lg'>₹ <del>{product.price.toLocaleString()}</del>
                                     &nbsp;
                                     {product.discount > 0 && (
                                         <b>{calculateDiscountedPrice(product.price, product.discount).toLocaleString()}</b>
@@ -55,10 +56,7 @@ const Featured = () => {
                                     <div className='anchor'>Buy Now</div>
                                 </div>
                             </Link>
-                        ))
-                    ) : (
-                        <p>fetching products...</p>
-                    )}
+                        ))}
                 </div>
             </section>
   )

@@ -90,10 +90,19 @@ const Reviews = ({ id }) => {
         }
     };
 
+    const [reviewsLength,setReviewsLength] = useState(2);
 
+    const toggleReview=()=>{
+        if(reviewsLength===2){
+            setReviewsLength(reviews.length);
+        }
+        else{
+            setReviewsLength(2);
+        }
+    }
 
     return (
-        <div className='review-section'>
+        <div className='review-section flex flex-col items-center'>
             <h3>Reviews</h3>
             <form onSubmit={handleSubmit} className='review-card'>
                 <div className="star-rating">
@@ -125,7 +134,7 @@ const Reviews = ({ id }) => {
                 </div>
             </form>
             {reviews.length > 0 ? (
-                reviews.map((review) => (
+                reviews.slice(0,reviewsLength).map((review) => (
                     <div key={review._id} className="review-card">
                         <h4>{review.userName}</h4>
                         <span className="review-date" style={{ float: 'right', fontSize: '12px', color: '#999' }}>
@@ -139,6 +148,9 @@ const Reviews = ({ id }) => {
                 <p>No reviews available for this product.</p>
             )}
 
+            <hr className='w-full' />
+            <h2 className='text-[#2291ff] w-full font-bold text-md px-3 py-2 sm:pb-6'><span onClick={toggleReview} className='cursor-pointer'>{reviewsLength > 2 ? '< See less reviews' : 'See more reviews >'}</span></h2>
+            <hr className='w-full sm:hidden' />
             <ToastContainer position="top-right" autoClose={2000} />
         </div>
     );

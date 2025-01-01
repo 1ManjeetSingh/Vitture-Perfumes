@@ -22,6 +22,7 @@
 
 .product-image {
     width: 100%;
+    min-width: 250px;
 }
 
 .arrow {

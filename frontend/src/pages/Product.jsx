@@ -71,7 +71,7 @@ const Product = () => {
                 <ProductDetails product={product} />  
             </div>
             <hr/>
-            <div className='reviews pb-4'>
+            <div className='reviews pb-4 flex justify-center'>
                 <Review id={id} />
             </div>
             <Footer />

@@ -13,7 +13,7 @@
 .highlights{
     margin: 20px auto;
     width: 80% !important;
-    height: 45vh;
+    height: 34vh;
     overflow: hidden;
 }
 
@@ -103,31 +103,44 @@
 
 @media (max-width:768px) {
     .highlights{
-        height: 30vh;
+        height: 25vh;
     }
     .offer-heading{
-        top: 12vh;
+        top: 14vh;
         font-size: 1.5rem;
     }
     .offer-heading > span{
         width: 30vw;
     }
     .highlights > .offer-link{
-        top: 23vh;
+        top: 25vh;
         font-size: 2rem;
     }
 }
 
-@media (max-width:468px) {
+@media (max-width: 533px) {
     .offer-heading{
         top: 14vh;
+        left: 8vw;
     }
     .offer-heading > span{
         width: 25vw;
     }
     .highlights > .offer-link{
-        top: 25vh;
+        top: 23vh;
+        left: 8vw;
         font-size: 1.5rem;
+        margin-right: 20px;
+    }
+    .highlights{
+        width: 100% !important;
+        height: 25vh;
+        margin: 20px 0 10px 0;
     }
 }
 
+@media (max-width:533px) and (min-width: 361px) {
+    .highlights{
+        height: 20vh;
+    }
+}
