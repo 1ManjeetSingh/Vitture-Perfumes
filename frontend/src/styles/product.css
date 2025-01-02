@@ -62,4 +62,10 @@
         padding-inline: 0px;
         gap: 0px;
     }
+    .home-icon{
+        left: 0.8rem;
+    }
+    .share-icon{
+        right: 0.8rem;
+    }
 }

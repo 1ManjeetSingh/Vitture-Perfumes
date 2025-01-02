@@ -4,6 +4,10 @@
     /* gap: 10px; */
 }
 
+.review-section > h3{
+    margin-top: 10px;
+}
+
 /* src/styles/review.css */
 .review-card {
     width: 100%;
