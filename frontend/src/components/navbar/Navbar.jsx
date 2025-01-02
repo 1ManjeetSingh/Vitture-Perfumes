@@ -10,7 +10,7 @@ const Navbar = () => {
         <header>
         <nav className="navbar">
             <div>
-                <img src={vImage} alt="V" />
+            <Link to="/home"><img src={vImage} alt="V" /></Link>
             </div>
             <h1 className='text-lg sm:text-2xl'>VITTURÉ</h1>
             <div>
