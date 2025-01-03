@@ -24,7 +24,7 @@ function App() {
     address: false,
     payment: false,
   });
-  
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ function App() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [navigate]);
-  
+
   useEffect(() => {
     const resetState = {
       profile: false,
@@ -53,7 +53,7 @@ function App() {
       address: false,
       payment: false,
     };
-  
+
     if (location.pathname === '/profile') {
       setIsOpen(false);
       setIsProfileOpen({ ...resetState, profile: true, details: true });
@@ -77,7 +77,7 @@ function App() {
       setIsProfileOpen(resetState);  // Reset to all false if none match
     }
   }, [location.pathname]);
-  
+
   useEffect(() => {
     const fetchdata = () => {
       setTimeout(() => {
@@ -123,23 +123,23 @@ function App() {
                 style={{
                   background: 'linear-gradient(to right,#010200 50%,gold)',
                 }}>VITTURÉ</div>
-                <Link to={'/'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.home ? 'bg-[#cfcfcf]': ''}`}>Home</div>
+              <Link to={'/'}>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.home ? 'bg-[#cfcfcf]' : ''}`}>Home</div>
               </Link>
               <Link to={'/cart'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.cart ? 'bg-[#cfcfcf]': ''}`}>Cart</div>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.cart ? 'bg-[#cfcfcf]' : ''}`}>Cart</div>
               </Link>
               <Link to={'/profile'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.details ? 'bg-[#cfcfcf]': ''}`}>Details</div>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.details ? 'bg-[#cfcfcf]' : ''}`}>Details</div>
               </Link>
               <Link to={'/user_orders'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.orders ? 'bg-[#cfcfcf]': ''}`}>Your Orders</div>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.orders ? 'bg-[#cfcfcf]' : ''}`}>Your Orders</div>
               </Link>
               <Link to={'/user_address'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.address ? 'bg-[#cfcfcf]': ''}`}>Address</div>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.address ? 'bg-[#cfcfcf]' : ''}`}>Address</div>
               </Link>
               <Link to={'/user_payment_methods'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.payment ? 'bg-[#cfcfcf]': ''}`}>Payment Methods</div>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.payment ? 'bg-[#cfcfcf]' : ''}`}>Payment Methods</div>
               </Link>
             </div>
           </div>
@@ -148,24 +148,24 @@ function App() {
           <div className={`profile-options absolute top-[8vh] left-0 z-[999] transform transition-transform duration-500 ease-out ${isProfileOpen.profile ? 'translate-x-0' : 'translate-x-[-100%]'} h-[92vh] w-[220px] border border-gray-300 bg-white shadow-[0_0_10px_0_rgba(0,0,0,0.2)] flex flex-col gap-6`}>
             <div className='h-[92vh] flex flex-col w-full justify-start'>
               <Link to={'/profile'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.details ? 'bg-[#cfcfcf]': ''}`}>Details</div>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.details ? 'bg-[#cfcfcf]' : ''}`}>Details</div>
               </Link>
               <Link to={'/user_orders'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.orders ? 'bg-[#cfcfcf]': ''}`}>Your Orders</div>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.orders ? 'bg-[#cfcfcf]' : ''}`}>Your Orders</div>
               </Link>
               <Link to={'/user_address'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.address ? 'bg-[#cfcfcf]': ''}`}>Address</div>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.address ? 'bg-[#cfcfcf]' : ''}`}>Address</div>
               </Link>
               <Link to={'/user_payment_methods'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.payment ? 'bg-[#cfcfcf]': ''}`}>Payment Methods</div>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.payment ? 'bg-[#cfcfcf]' : ''}`}>Payment Methods</div>
               </Link>
               <Link to={'/'}>
-                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.home ? 'bg-[#cfcfcf]': ''}`}>Home</div>
+                <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.home ? 'bg-[#cfcfcf]' : ''}`}>Home</div>
               </Link>
             </div>
             <div className={`absolute ${isProfileOpen.profile ? 'left-7' : ''} flex w-full justify-end items-center rounded-r-lg text-lg cursor-default z-[-1]`}>
               <Link to={'/'}>
-              <button className='border border-gray-300 rounded-r-lg px-2'>X</button>
+                <button className='border border-gray-300 rounded-r-lg px-2'>X</button>
               </Link>
             </div>
           </div>

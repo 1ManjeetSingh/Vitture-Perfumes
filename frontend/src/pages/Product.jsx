@@ -29,10 +29,7 @@ const Product = () => {
         }
       };
 
-    window.scrollTo({
-        top: 60,
-        behavior: 'smooth',
-    });
+
     const { id } = useParams();
     const [product, setProduct] = useState(null);
 
@@ -49,6 +46,12 @@ const Product = () => {
         };
 
         fetchProduct();
+        
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+
     }, [id]);
 
     if (!product) {
