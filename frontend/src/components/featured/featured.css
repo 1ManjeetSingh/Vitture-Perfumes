@@ -68,18 +68,6 @@
       transition: transform 0.3s ease;
   }
 
-  .productCard{
-    min-width: 250px;
-    background-color: #f9f9f9;
-    color: black;
-    text-decoration: none;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: relative;
-    /* Add Transition Property here */
-      transition: transform 0.3s ease;
-  }
   
   /* Add effects by hovering over product-card below */
   .product-card:hover{
@@ -150,7 +138,6 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    font-size: 1rem;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     color: green;
   }
@@ -170,5 +157,11 @@
     }
     .showcase > h2{
       margin: 10px 0;
+    }  
+    .product-card > span:first-child{
+      top: 5px;
+      left: 5px;
+      font-family:Verdana, Geneva, Tahoma, sans-serif;
+      color: green;
     }
   }

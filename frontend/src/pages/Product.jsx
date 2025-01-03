@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import Navbar from '../components/navbar/Navbar';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import ImageSlider from '../components/slider/ImageSlider';
 import ProductDetails from '../components/details/ProductDetails';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,9 +7,10 @@ import { faArrowLeft, faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import '../styles/product.css';
 import Loader from '../components/loader/Loader';
 import Review from '../components/review/Reviews';
-import Footer from '../components/footer/Footer';
 
 const Product = () => {
+
+    const navigate = useNavigate();
 
     const handleShare = async () => {
         if (navigator.share) {
@@ -57,11 +57,8 @@ const Product = () => {
 
     return (
         <>
-            <Navbar />
             <div className='product-row'>
-                <Link to="/" className='home-icon'>
-                    <FontAwesomeIcon icon={faArrowLeft} className='home' />
-                </Link>
+                    <FontAwesomeIcon onClick={()=>navigate(-1)} icon={faArrowLeft} className='home home-icon' />
                 <button onClick={handleShare} className='share-icon'>
                     <FontAwesomeIcon icon={faShareNodes} className='share' />
                 </button>
@@ -74,7 +71,6 @@ const Product = () => {
             <div className='reviews pb-4 flex justify-center'>
                 <Review id={id} />
             </div>
-            <Footer />
         </>
     );
 };

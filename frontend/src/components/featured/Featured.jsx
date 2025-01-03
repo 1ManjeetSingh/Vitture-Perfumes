@@ -24,7 +24,7 @@ const Featured = () => {
     }, []);
 
     const calculateDiscountedPrice = (price, discount) => {
-        return Math.round(price - (price * (discount / 100))); // Calculate the discounted price and round it to the nearest integer
+        return Math.round(price - (price * (discount / 100)) - 0.5); // Calculate the discounted price and round it to the nearest integer
     };
 
   return (
@@ -38,7 +38,7 @@ const Featured = () => {
                 <div className="container">
                         {products.map(product => (
                             <Link to={`/Product/${product._id}`} className="product-card" key={product._id}>
-                                <span className='text-sm sm:text-lg'>-{product.discount}%</span>
+                                <span className='absolute text-xs sm:text-lg'>-{product.discount}%</span>
                                 <div>
                                 <img
                                     src={product.images.length > 0 ? `${import.meta.env.VITE_BACKEND_BASE_URL}/api/productImages/files/${product.images[0]}` : 'placeholder_image.jpg'}

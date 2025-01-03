@@ -16,3 +16,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #031426;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;  /* Scrollbar width */
+}
+
+@media (max-width:768px) {
+  .profile-options, .left-space {
+    display: none;
+  }
+}

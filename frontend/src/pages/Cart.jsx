@@ -21,19 +21,11 @@ const cartItems = [
     price: 2999,
     discount: 50,
     selected: true,
-  }, {
-    id: 3,
-    itemName: `Bacca Bucci® Zeus Men Fashion Sneakers/Running Shoes`,
-    quantity: 2,
-    image: 'https://m.media-amazon.com/images/I/716kSfEScGS._AC_AA180_.jpg',
-    price: 2999,
-    discount: 50,
-    selected: true,
   },
 ];
 
 const discountedPrice = (price, discount) => {
-  return price * (1 - (discount) / 100);
+  return Math.round(price * (1 - (discount) / 100) - 0.5);
 }
 
 const Cart = () => {
@@ -49,8 +41,7 @@ const Cart = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="Cart flex px-6 pt-6 w-[90%] mx-auto relative">
+      <div className="Cart flex px-6 pt-6 w-[90%] min-h-[84vh] mx-auto relative">
         <div className="cart-counter min-w-[320px] h-fit p-4 flex flex-col items-start gap-6 bg-white">
           <h1 className='text-md sm:text-xl'>Subtotal (2 items): <span className='font-bold'>₹1,298</span></h1>
           <h1 className='text-sm sm:text-lg'>Delivery: <span className='font-semibold'><del className='font-light'>₹40</del> free delivery ✅</span></h1>
@@ -123,7 +114,6 @@ const Cart = () => {
       <div className='w-full p-2 bg-[#b1b1b1] mx-auto mb-4 flex justify-center items-center'>
         recomanded
       </div>
-      <Footer />
     </>
   )
 }

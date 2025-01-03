@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/home.css';
 // import { Link } from 'react-router-dom';
 import Navbar from '../components/navbar/Navbar';
@@ -7,10 +7,9 @@ import Featured from '../components/featured/Featured';
 
 
 const Home = () => {
-
+    
     return (
         <>
-            <Navbar />
             <section className='highlights'>
                 <img src='https://irfe.com/wp-content/uploads/2024/04/A-collection-of-the-expensive-perfumes-for-women-displayed-on-a-luxurious-vanity.jpg' alt='' />
                 <div className='offer-heading'>
@@ -29,7 +28,6 @@ const Home = () => {
             <section className='featuredProducts' id='offerProducts'>
                 <Featured />
             </section>
-            <Footer />
         </>
     );
 };
