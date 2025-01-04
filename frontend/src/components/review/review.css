@@ -65,6 +65,22 @@ form.review-card:focus-within {
     color: goldenrod; /* Color for filled stars */
 }
 
+.order-star-rating {
+    cursor: pointer;
+}
+
+.order-star {
+    font-size: 20px; /* Size of the stars */
+    color: #aaa; /* Default color for empty stars */
+    margin-right: 5px; /* Space between stars */
+    transition: color 0.2s ease; /* Smooth color transition */
+    cursor: default;
+}
+
+.order-star.filled {
+    color: goldenrod; /* Color for filled stars */
+}
+
 
 .comment input {
     width: 85%;

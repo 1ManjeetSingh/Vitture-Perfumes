@@ -30,6 +30,17 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      const target = event.target;
+
+      // Exclude when focus is on input, textarea, or contenteditable
+      if (
+        (target.tagName === 'INPUT' || 
+        target.tagName === 'TEXTAREA' || 
+        target.isContentEditable)
+      ) {
+        return;  // Do nothing if focused on input/textarea
+      }
+
       if (event.key === 'Backspace') {
         navigate(-1);  // Go back one step in history
       }
@@ -42,6 +53,7 @@ function App() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [navigate]);
+
 
   useEffect(() => {
     const resetState = {
