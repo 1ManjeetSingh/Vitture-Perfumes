@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , lazy, Suspense} from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import ImageSlider from '../components/slider/ImageSlider';
-import ProductDetails from '../components/details/ProductDetails';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import '../styles/product.css';
-import Loader from '../components/loader/Loader';
-import Review from '../components/review/Reviews';
+const ImageSlider = lazy(() => import('../components/slider/ImageSlider'));
+const ProductDetails = lazy(() => import('../components/details/ProductDetails'));
+const Loader = lazy(() => import('../components/loader/Loader'));
+const Review = lazy(() => import('../components/review/Reviews'));
 
 const Product = () => {
 
@@ -56,16 +56,13 @@ const Product = () => {
 
     }, [id]);
 
-    if (error) {
-        return (<div>{error}</div>);
-    }
-
     if (!product) {
         return (<Loader />);
     }
 
     return (
         <>
+        <Suspense fallback={<Loader />} >
             <div className='product-row'>
                     <FontAwesomeIcon onClick={()=>navigate(-1)} icon={faArrowLeft} className='home home-icon' />
                 <button onClick={handleShare} className='share-icon'>
@@ -80,6 +77,7 @@ const Product = () => {
             <div className='reviews pb-4 flex justify-center'>
                 <Review id={id} />
             </div>
+        </Suspense>
         </>
     );
 };

@@ -145,11 +145,11 @@ const Reviews = ({ id }) => {
                     </div>
                 ))
             ) : (
-                <p>No reviews available for this product.</p>
+                <p className='my-6'>No reviews available for this product.</p>
             )}
 
             <hr className='w-full' />
-            <h2 className='text-[#2291ff] w-full font-bold text-md px-3 py-2 sm:pb-6'><span onClick={toggleReview} className='cursor-pointer'>{reviewsLength > 2 ? '< See less reviews' : 'See more reviews >'}</span></h2>
+            {(reviews.length <= 2) ? '' :<h2 className='text-[#2291ff] w-full font-bold text-md px-3 py-2 sm:pb-6'><span onClick={toggleReview} className='cursor-pointer'>{reviewsLength > 2 ? '< See less reviews' : 'See more reviews >'}</span></h2>}
             <hr className='w-full sm:hidden' />
             <ToastContainer position="top-right" autoClose={2000} />
         </div>
