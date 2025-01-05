@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/productlisting.css';
+import imageCompression from 'browser-image-compression';
+
 
 const ProductListing = () => {
     const [images, setImages] = useState([]);
@@ -12,9 +14,26 @@ const ProductListing = () => {
         description: '',
     });
 
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
         const selectedFiles = Array.from(e.target.files);
-        setImages(selectedFiles);
+        const compressedImages = [];
+    
+        for (const file of selectedFiles) {
+            const options = {
+                maxSizeMB: 1,               // Maximum size of the image (1MB)
+                maxWidthOrHeight: 1024,     // Resize to max 1024px width or height
+                useWebWorker: true,
+            };
+            
+            try {
+                const compressedFile = await imageCompression(file, options);
+                compressedImages.push(compressedFile);
+            } catch (error) {
+                console.error('Error compressing image:', error);
+            }
+        }
+    
+        setImages(compressedImages);  // Set compressed images to state
     };
 
     const handleInputChange = (e) => {

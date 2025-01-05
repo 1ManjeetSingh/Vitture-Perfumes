@@ -32,6 +32,7 @@ const Product = () => {
 
     const { id } = useParams();
     const [product, setProduct] = useState(null);
+    const [error,setError] = useState(null);
 
     useEffect(() => {
         // Fetch the product data from your backend API
@@ -42,6 +43,7 @@ const Product = () => {
                 setProduct(data);
             } catch (error) {
                 console.error('Error fetching product data:', error);
+                setError('Error fetching product data:', error);
             }
         };
 
@@ -53,6 +55,10 @@ const Product = () => {
         });
 
     }, [id]);
+
+    if (error) {
+        return (<div>{error}</div>);
+    }
 
     if (!product) {
         return (<Loader />);

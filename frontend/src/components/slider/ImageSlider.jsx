@@ -28,7 +28,7 @@ export default function ImageSlider({ images = [] }) {
             <Slider {...settings}>
                 {imageUrls.map((url, index) => (
                     <div key={index} className="product-image">
-                        <img src={url} alt={`Slide ${index + 1}`} />
+                        <img src={url} alt={`Slide ${index + 1}`} loading="lazy" />
                     </div>
                 ))}
             </Slider>

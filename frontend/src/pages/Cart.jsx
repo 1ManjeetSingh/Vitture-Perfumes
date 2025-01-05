@@ -78,6 +78,7 @@ const Cart = () => {
                     <img
                       src={item.image}
                       alt={item.itemName}
+                      loading="lazy"
                       className="object-cover rounded-md"
                     />
                   </div>

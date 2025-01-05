@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, Suspense, lazy } from 'react';
 import '../styles/home.css';
 // import { Link } from 'react-router-dom';
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
-import Featured from '../components/featured/Featured';
-
+// import Featured from '../components/featured/Featured';
+const Featured = lazy(() => import('../components/featured/Featured'));
 
 const Home = () => {
-    
+
     return (
         <>
             <section className='highlights'>
-                <img src='https://irfe.com/wp-content/uploads/2024/04/A-collection-of-the-expensive-perfumes-for-women-displayed-on-a-luxurious-vanity.jpg' alt='' />
+                <img src='https://irfe.com/wp-content/uploads/2024/04/A-collection-of-the-expensive-perfumes-for-women-displayed-on-a-luxurious-vanity.jpg' loading="lazy" alt='' />
                 <div className='offer-heading'>
                     Special Offer
                     <span></span>
@@ -26,7 +26,9 @@ const Home = () => {
             </section>
 
             <section className='featuredProducts' id='offerProducts'>
-                <Featured />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Featured />
+                </Suspense>
             </section>
         </>
     );

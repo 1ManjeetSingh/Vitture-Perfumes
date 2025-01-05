@@ -43,6 +43,7 @@ const Featured = () => {
                                 <img
                                     src={product.images.length > 0 ? `${import.meta.env.VITE_BACKEND_BASE_URL}/api/productImages/files/${product.images[0]}` : 'placeholder_image.jpg'}
                                     alt={product.name}
+                                    loading="lazy"
                                 />
                                 </div>
                                 <h3 className='text-sm sm:text-lg overflow-hidden whitespace-nowrap text-ellipsis'>{product.name}</h3>

@@ -11,7 +11,7 @@ const Navbar = ({ setIsOpen }) => {
         <header>
         <nav className="navbar">
             <div>
-            <Link to="/"><img src={vImage} alt="V" title='Home' /></Link>
+            <Link to="/"><img src={vImage} alt="V" title='Home' loading="lazy" /></Link>
             </div>
             <h1 className='text-lg sm:text-2xl'>VITTURÉ</h1>
             <div>

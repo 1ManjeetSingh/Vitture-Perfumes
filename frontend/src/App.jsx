@@ -1,18 +1,22 @@
-import { React, useState, useEffect, useRef } from 'react';
+import { React, useState, useEffect, useRef, lazy, Suspense} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import Loader from './components/loader/Loader';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Home from './pages/Home';
-import Profile from './pages/Profile';
-import Cart from './pages/Cart';
-import Product from './pages/Product';
-import ProductListing from './pages/ProductListing';
-import Navbar from './components/navbar/Navbar';
-import Footer from './components/footer/Footer';
-import Orders from './components/profileComponents/Orders';
-import Address from './components/profileComponents/Address';
-import Payment from './components/profileComponents/Payment';
+const Home = lazy(() => import('./pages/Home'))
+const Profile = lazy(() => import('./pages/Profile'));
+const Cart = lazy(() => import('./pages/Cart'));
+const Product = lazy(() => import('./pages/Product'));
+const ProductListing = lazy(() => import('./pages/ProductListing'));
+
+// Lazy load components
+const Navbar = lazy(() => import('./components/navbar/Navbar'));
+const Footer = lazy(() => import('./components/footer/Footer'));
+
+// Lazy load profile sub-components
+const Orders = lazy(() => import('./components/profileComponents/Orders'));
+const Address = lazy(() => import('./components/profileComponents/Address'));
+const Payment = lazy(() => import('./components/profileComponents/Payment'));
 
 function App() {
 
@@ -121,8 +125,8 @@ function App() {
 
   return (
     <>
-      {isLoading ? <Loader /> :
-        <>
+      {/* {isLoading ? <Loader /> : <>*/}
+      <Suspense fallback={<Loader />}>
           <Navbar setIsOpen={setIsOpen} />
 
           {/* <------------------- Menu Button ------------------> */}
@@ -194,7 +198,8 @@ function App() {
             <Route path='/user_payment_methods' element={<Payment />} />
           </Routes>
           <Footer />
-        </>}
+          </Suspense>
+        {/* </>} */}
     </>
   );
 }
