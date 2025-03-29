@@ -41,8 +41,9 @@ const Featured = () => {
                                 <span className='absolute text-xs sm:text-lg'>-{product.discount}%</span>
                                 <div>
                                 <img
-                                    src={product.images.length > 0 ? `${import.meta.env.VITE_BACKEND_BASE_URL}/api/productImages/files/${product.images[0]}` : 'placeholder_image.jpg'}
+                                    src={product.images.length > 0 ? `${import.meta.env.VITE_BACKEND_BASE_URL}/api/productImages/files/${product.images[0]}` : './perfume.webp'}
                                     alt={product.name}
+                                    onError={(e) => { e.target.src = "./perfume.webp"; }} 
                                     loading="lazy"
                                 />
                                 </div>

@@ -4,6 +4,7 @@ import allproductsRoute from './routes/allproducts.js';
 import uploadRoutes from './routes/upload.js';
 import productImagesRoute from './routes/productImages.js';
 import reviewsRoute from './routes/reviews.js';
+import CartItemsRoute from './routes/CartItems.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -30,6 +31,7 @@ connectDB()
         app.use('/api/upload', uploadRoutes);
         app.use('/api/productImages', productImagesRoute);
         app.use('/api/reviews', reviewsRoute);
+        app.use('/api/cartItems', CartItemsRoute);
 
         // Start server
         app.listen(PORT, () => {

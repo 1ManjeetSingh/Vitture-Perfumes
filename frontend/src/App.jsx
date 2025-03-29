@@ -68,6 +68,7 @@ function App() {
       orders: false,
       address: false,
       payment: false,
+      listing: false,
     };
 
     if (location.pathname === '/profile') {
@@ -88,6 +89,9 @@ function App() {
     } else if (location.pathname === '/user_payment_methods') {
       setIsOpen(false);
       setIsProfileOpen({ ...resetState, profile: true, payment: true });
+    } else if (location.pathname === '/productlist') {
+      setIsOpen(false);
+      setIsProfileOpen({ ...resetState, profile: true, listing: true });
     } else {
       setIsOpen(false);
       setIsProfileOpen(resetState);  // Reset to all false if none match
@@ -128,7 +132,7 @@ function App() {
       {/* {isLoading ? <Loader /> : <>*/}
       <Suspense fallback={<Loader />}>
           <Navbar setIsOpen={setIsOpen} />
-
+          
           {/* <------------------- Menu Button ------------------> */}
           <div className={`fixed top-0 left-0 h-[100vh] w-full z-[999] transform transition-transform duration-500 ease-out ${isOpen ? 'translate-x-0' : 'translate-x-[-100%]'}`}
             style={{
@@ -177,6 +181,9 @@ function App() {
               </Link>
               <Link to={'/'}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.home ? 'bg-[#cfcfcf]' : ''}`}>Home</div>
+              </Link>
+              <Link to={'/productlist'}>
+              <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.listing ? 'bg-[#cfcfcf]' : ''}`}>List New Product</div>
               </Link>
             </div>
             <div className={`absolute ${isProfileOpen.profile ? 'left-7' : ''} flex w-full justify-end items-center rounded-r-lg text-lg cursor-default z-[-1]`}>

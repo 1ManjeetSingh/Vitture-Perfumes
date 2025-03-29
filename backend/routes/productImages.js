@@ -35,8 +35,16 @@ router.get('/files/:id', async (req, res) => {
             res.status(404).json({ message: 'Image not found' });
         });
 
+        const mimeType = {
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.png': 'image/png',
+            '.gif': 'image/gif',
+            '.webp': 'image/webp',
+        }[path.extname(filePath).toLowerCase()] || 'application/octet-stream';
+
         // Set headers and pipe image to response
-        res.setHeader('Content-Type', 'image/jpeg');  // Adjust as necessary
+        res.setHeader('Content-Type', mimeType);  // Adjust as necessary
         fileStream.pipe(res);
 
     } catch (error) {

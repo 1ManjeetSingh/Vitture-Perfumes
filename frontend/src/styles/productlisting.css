@@ -2,13 +2,12 @@
     width: 80%;
     margin: auto;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .product-form {
     display: flex;
+    width: 60%;
+    padding: 20px 0;
     flex-direction: column;
 }
 
