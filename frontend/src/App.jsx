@@ -158,9 +158,9 @@ function App() {
               <Link to={'/user_address'}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.address ? 'bg-[#cfcfcf]' : ''}`}>Address</div>
               </Link>
-              <Link to={'/user_payment_methods'}>
+              {/* <Link to={'/user_payment_methods'}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.payment ? 'bg-[#cfcfcf]' : ''}`}>Payment Methods</div>
-              </Link>
+              </Link> */}
             </div>
           </div>
 
@@ -176,12 +176,12 @@ function App() {
               <Link to={'/user_address'}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.address ? 'bg-[#cfcfcf]' : ''}`}>Address</div>
               </Link>
-              <Link to={'/user_payment_methods'}>
+              {/* <Link to={'/user_payment_methods'}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.payment ? 'bg-[#cfcfcf]' : ''}`}>Payment Methods</div>
-              </Link>
-              <Link to={'/'}>
+              </Link> */}
+              {/* <Link to={'/'}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.home ? 'bg-[#cfcfcf]' : ''}`}>Home</div>
-              </Link>
+              </Link> */}
               <Link to={'/productlist'}>
               <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.listing ? 'bg-[#cfcfcf]' : ''}`}>List New Product</div>
               </Link>
