@@ -14,6 +14,7 @@ const Featured = () => {
             try {
                 const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/allproducts/products`); // Your API endpoint
                 const data = await response.json();
+                console.log(data);
                 setProducts(data);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -43,7 +44,7 @@ const Featured = () => {
                                 <img
                                     src={product.images.length > 0 ? `${import.meta.env.VITE_BACKEND_BASE_URL}/api/productImages/files/${product.images[0]}` : './perfume.webp'}
                                     alt={product.name}
-                                    onError={(e) => { e.target.src = "./perfume.webp"; }} 
+                                    // onError={(e) => { e.target.src = "./perfume.webp"; }} 
                                     loading="lazy"
                                 />
                                 </div>

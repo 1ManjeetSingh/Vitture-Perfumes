@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import { MongoClient, GridFSBucket, ObjectId } from 'mongodb';
 import dotenv from 'dotenv';
 
@@ -23,30 +24,28 @@ let bucket;
     }
 })();
 
-// Route to get image by ObjectId
 router.get('/files/:id', async (req, res) => {
     try {
         const fileId = new ObjectId(req.params.id);
-        const fileStream = bucket.openDownloadStream(fileId);
 
-        // Handle errors in streaming
+        // Find file metadata from GridFS
+        const file = await bucket.find({ _id: fileId }).toArray();
+        if (!file.length) {
+            return res.status(404).json({ message: 'Image not found' });
+        }
+
+        // Extract MIME type from metadata
+        const mimeType = file[0].contentType || 'application/octet-stream';
+        res.setHeader('Content-Type', mimeType);
+
+        // Stream file to response
+        const fileStream = bucket.openDownloadStream(fileId);
         fileStream.on('error', (error) => {
             console.error('Error retrieving image:', error.message);
             res.status(404).json({ message: 'Image not found' });
         });
 
-        const mimeType = {
-            '.jpg': 'image/jpeg',
-            '.jpeg': 'image/jpeg',
-            '.png': 'image/png',
-            '.gif': 'image/gif',
-            '.webp': 'image/webp',
-        }[path.extname(filePath).toLowerCase()] || 'application/octet-stream';
-
-        // Set headers and pipe image to response
-        res.setHeader('Content-Type', mimeType);  // Adjust as necessary
         fileStream.pipe(res);
-
     } catch (error) {
         console.error('Error retrieving image by ObjectId:', error.message);
         if (error.name === 'BSONTypeError') {
@@ -56,5 +55,6 @@ router.get('/files/:id', async (req, res) => {
         }
     }
 });
+
 
 export default router;
