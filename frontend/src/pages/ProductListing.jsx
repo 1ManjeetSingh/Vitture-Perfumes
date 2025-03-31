@@ -78,11 +78,11 @@ const ProductListing = () => {
                 <div className='left-space h-full w-[220px]'>
                 </div>
 
-                <div className="product-listing-container w-full h-full flex flex-col pr-8 pl-12 py-4 gap-4 justify-start items-center overflow-y-auto custom-scrollbar">
+                <div className="product-listing-container w-full h-full flex flex-col md:pr-8 md:pl-12 py-4 gap-4 justify-start items-center overflow-y-auto custom-scrollbar">
                     <p className='flex w-full bg-[#cecece] text-lg sm:text-2xl font-[600] h-[40px] justify-center items-center mb-2'>
                         Add New Product
                     </p>
-                    <form onSubmit={handleSubmit} className="product-form">
+                    <form onSubmit={handleSubmit} className="product-form w-[80%] md:w-[50%]">
                         <label htmlFor="name">Product Name</label>
                         <input id="name" type="text" value={formData.name} onChange={handleInputChange} required />
 

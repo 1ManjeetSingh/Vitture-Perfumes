@@ -140,10 +140,10 @@ const Cart = () => {
             {cartItems.length == 0 ? <div className='flex h-[100px] items-center text-sm font-light'>Your Cart is Empty</div> : cartItems.map((item) => {
               return (
                 <div key={item.id} className="cart-items flex w-full bg-white shadow-md rounded-lg relative p-4 mb-3">
-                  <input
+                  {/* <input
                     type="checkbox"
                     className="w-4 h-4 absolute top-4 left-4 cursor-pointer"
-                  />
+                  /> */}
                   <div className="item-image w-[100px] sm:w-[160px] h-auto flex-shrink-0">
                     <img
                       src={item.image ? `${import.meta.env.VITE_BACKEND_BASE_URL}/api/productImages/files/${item.image}` : './perfume.webp'}

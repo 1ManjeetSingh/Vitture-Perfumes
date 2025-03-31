@@ -94,8 +94,11 @@ const Address = () => {
                 <div className='left-space h-full w-[220px]'>
                 </div>
 
-                <div className='w-full overflow-y-auto h-full px-10'>
-                    {addAddress == false ? <div className="flex flex-wrap w-full p-2 gap-4">
+                <div className='w-full overflow-y-auto h-full md:pl-10 md:pr-6 py-4'>
+                <p className='flex w-full bg-[#cecece] text-lg sm:text-2xl font-[600] h-[40px] justify-center items-center mb-2'>
+                        Your Address
+                    </p>
+                    {addAddress == false ? <div className="flex flex-wrap w-full justify-center p-2 gap-4">
                         <div className="flex flex-col items-center justify-center w-[250px] h-[250px] rounded-md border border-dotted border-gray-400 cursor-pointer" onClick={() => { setAddAddress(true) }}>
                             <p className="text-2xl text-gray-700">Add Address</p>
                             <p className="text-4xl text-gray-700">+</p>

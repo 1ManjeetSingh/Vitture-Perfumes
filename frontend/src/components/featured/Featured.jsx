@@ -8,6 +8,8 @@ import './featured.css';
 const Featured = () => {
 
     const [products, setProducts] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");  
+    const [filteredProducts, setFilteredProducts] = useState([]); 
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -16,6 +18,7 @@ const Featured = () => {
                 const data = await response.json();
                 console.log(data);
                 setProducts(data);
+                setFilteredProducts(data);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -24,27 +27,41 @@ const Featured = () => {
         fetchProducts();
     }, []);
 
+     const handleSearch = (e) => {
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        // Filter products based on search query
+        const filtered = products.filter(product => 
+            product.name.toLowerCase().includes(query) || 
+            product.description.toLowerCase().includes(query)
+        );
+        setFilteredProducts(filtered);
+    };
+
     const calculateDiscountedPrice = (price, discount) => {
-        return Math.round(price - (price * (discount / 100)) - 0.5); // Calculate the discounted price and round it to the nearest integer
+        return Math.round(price - (price * (discount / 100)) - 0.5); 
     };
 
   return (
-    <section className="showcase">
+    <section className="showcase pt-4">
         <div className="searchBar">
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    <input type="text" id="searchInput" placeholder="Search..." />
+                    <input className='pb-1 px-2' type="text" id="searchInput" placeholder="Search..." value={searchQuery}
+                    onChange={handleSearch}/>
                     <span className="underline"></span>
                 </div>
                 <h2>Popular Products</h2>
                 <div className="container">
-                        {products.map(product => (
+                {filteredProducts.length > 0 ? (
+                        filteredProducts.map(product => (
                             <Link to={`/Product/${product._id}`} className="product-card" key={product._id}>
                                 <span className='absolute text-xs sm:text-lg'>-{product.discount}%</span>
                                 <div>
                                 <img
                                     src={product.images.length > 0 ? `${import.meta.env.VITE_BACKEND_BASE_URL}/api/productImages/files/${product.images[0]}` : './perfume.webp'}
                                     alt={product.name}
-                                    // onError={(e) => { e.target.src = "./perfume.webp"; }} 
+                                    onError={(e) => { e.target.src = "./perfume.webp"; }} 
                                     loading="lazy"
                                 />
                                 </div>
@@ -59,7 +76,7 @@ const Featured = () => {
                                     <div className='anchor'>Buy Now</div>
                                 </div>
                             </Link>
-                        ))}
+                        ))) : (<p>No products found</p>)}
                 </div>
             </section>
   )
