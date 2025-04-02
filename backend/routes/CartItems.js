@@ -2,11 +2,12 @@ import express from "express";
 import mongoose from "mongoose";
 import CartItems from "../models/CartItems.js";
 import ProductDetails from "../models/ProductDetails.js";
+import auth from '../middlewares/auth.js';
 
 const router = express.Router();
 
 // Fetch all cart items with product details
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
     try {
         const cartItems = await CartItems.find().populate({
             path: "productId",
@@ -31,7 +32,7 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post('/addItem/:id', async (req, res) => {
+router.post('/addItem/:id', auth, async (req, res) => {
     const { quantity } = req.body;
     const productId = req.params.id;
 
@@ -43,12 +44,12 @@ router.post('/addItem/:id', async (req, res) => {
         const newCartItem = new CartItems({ productId, quantity });
         await newCartItem.save();
 
-        return res.status(200).json({message: "Item added to cart successfully", newCartItem});
+        return res.status(200).json({message: "Item added to cart successfully", newCartItem, success: true});
         }
         else{
             cartItem.quantity += quantity;
             await cartItem.save();
-            return res.status(200).json({message: "Quantity added to cart successfully", cartItem});
+            return res.status(200).json({message: "Quantity added to cart successfully", cartItem, success: true});
         }
     } catch (error) {
         console.error('Error Adding Item to Cart:', error);

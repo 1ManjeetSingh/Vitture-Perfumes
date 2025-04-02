@@ -29,12 +29,14 @@ const Featured = () => {
 
      const handleSearch = (e) => {
         const query = e.target.value.toLowerCase();
+        
         setSearchQuery(query);
 
         // Filter products based on search query
         const filtered = products.filter(product => 
             product.name.toLowerCase().includes(query) || 
-            product.description.toLowerCase().includes(query)
+            product.description.toLowerCase().includes(query) ||
+            (product.price*(1-product.discount/100) >= parseInt(query) - 60 && product.price*(1-product.discount/100) <= parseInt(query) + 60)
         );
         setFilteredProducts(filtered);
     };

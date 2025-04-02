@@ -1,12 +1,23 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import './footer.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Footer = () => {
+  const location = useLocation();
+  const [showFooter, setShowFooter] = useState(true);
+  
+  useEffect(() => {
+      const hiddenPaths = ["/login", "/register"];
+      const shouldHideFooter = hiddenPaths.includes(location.pathname);
+  
+      setShowFooter(!shouldHideFooter);
+  }, [location.pathname]); // Only trigger effect when pathname changes
+
   return (
-     <footer>
+    <>
+     <footer className={showFooter==true ? "":"hidden"}>
       <div className="footer-content">
         <div className="footer-column">
           <h4>Customer Service</h4>
@@ -41,6 +52,7 @@ const Footer = () => {
       </div>
       <p>&copy; 2023 VITTURÉ. All rights reserved.</p>
     </footer>
+    </>
   )
 }
 

@@ -1,19 +1,19 @@
-// import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
-//  const authenticateJWT = (req, res, next) => {
-//     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+function auth(req, res, next){
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+    req.body.userId = userId;
+    next();
+  } catch (error) {
+    res.status(401).send({
+      message: "You are not authenticated",
+      data: error,
+      success: false,
+    });
+  }
+};
 
-//     if (token) {
-//         jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-//             if (err) {
-//                 return res.sendStatus(403);
-//             }
-//             req.user = user;
-//             next();
-//         });
-//     } else {
-//         res.sendStatus(401);
-//     }
-// };
-
-// export default authenticateJWT;
+export default auth;

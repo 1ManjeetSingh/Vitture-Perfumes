@@ -1,14 +1,24 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faCartShopping, faBars} from '@fortawesome/free-solid-svg-icons';
 import vImage from '../../assets/product images/V.jpeg';
 
 const Navbar = ({ setIsOpen }) => {
+    const location = useLocation();
+    const [showNav, setShowNav] = useState(true);
+
+    useEffect(() => {
+          const hiddenPaths = ["/login", "/register"];
+          const shouldHideNav = hiddenPaths.includes(location.pathname);
+      
+          setShowNav(!shouldHideNav);
+      }, [location.pathname]); // Only trigger effect when pathname changes
 
     return (
-        <header>
+        <>
+        <header className={showNav==true ? "":"hidden"}>
         <nav className="navbar">
             <div>
             <Link to="/"><img src={vImage} alt="V" title='Home' loading="lazy" /></Link>
@@ -21,6 +31,7 @@ const Navbar = ({ setIsOpen }) => {
             </div>
         </nav>
         </header>
+        </>
     )
 }
 

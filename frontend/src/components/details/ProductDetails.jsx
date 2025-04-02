@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { message } from 'antd';
 import './details.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const ProductDetails = ({ product }) => {
     const [quantity, setQuantity] = useState(1);
     const [isExpanded, setIsExpanded] = useState(false);
+    const navigate = useNavigate();
 
     const handleDecrease = () => {
         setQuantity(prev => (prev > 1 ? prev - 1 : 1));
@@ -23,22 +26,40 @@ const ProductDetails = ({ product }) => {
         return <div>Loading...</div>;
     }
 
-    const handleAddToCart = async() => {
+    const handleAddToCart = async () => {
+        const token = localStorage.getItem("token");
+        console.log(token);
+        
+
+            if (!token) {
+                navigate("/login");
+                return;
+            }
+
         try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems/addItem/${product._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({ quantity }),
             });
-        
-            if (response.status == 200) {
-                const data = await response.json();
-                toast.success(data.message);
-            } else {
+
+            if (response.status !== 200) {
                 toast.error(data.message || "Failed to add item to cart.");
-            }
+                return;
+            } 
+
+            const data = await response.json();
+
+            if(!data.success){
+                navigate("/login");
+                return;
+              }
+
+            toast.success(data.message);
+
         } catch (error) {
             console.error("Error adding item to cart:", error);
             toast.error("Something went wrong. Please try again.");
@@ -50,10 +71,10 @@ const ProductDetails = ({ product }) => {
 
     return (
         <div className='inline-component'>
-            <ToastContainer 
-            position="top-center"
-            autoClose={3000}/>
-            
+            <ToastContainer
+                position="top-center"
+                autoClose={3000} />
+
             <div className="productContainer">
                 <h1 className='leading-tight sm:leading-normal'>{product.name}</h1>
                 <p className="sub-heading leading-tight sm:leading-normal">{product.flavour || "Product Category"}</p>
@@ -72,7 +93,7 @@ const ProductDetails = ({ product }) => {
                 </div>
 
                 <p className="description leading-tight sm:leading-normal">
-                    {isExpanded 
+                    {isExpanded
                         ? product.description
                         : `${product.description.slice(0, 100)}...`}
                     <button onClick={handleToggleDescription} className="read-more">
