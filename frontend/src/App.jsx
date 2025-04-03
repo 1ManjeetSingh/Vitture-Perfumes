@@ -166,9 +166,9 @@ function App() {
             <Link to={'/user_address'}>
               <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.address ? 'bg-[#cfcfcf]' : ''} ${!user ? 'hidden':''}`}>Address</div>
             </Link>
-            <p onClick={()=>logout()}>
+            <div onClick={()=>logout()}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${!user ? 'hidden':''}`}>Logout</div>
-              </p>
+              </div>
             <Link to={'/login'}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${!user ? '':'hidden'}`}>Login</div>
               </Link>
@@ -190,9 +190,9 @@ function App() {
             <Link to={'/productlist'}>
               <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.listing ? 'bg-[#cfcfcf]' : ''} ${!user ? 'hidden':''}`}>List New Product</div>
             </Link>
-            <p onClick={()=>logout()}>
+            <div onClick={()=>logout()}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${!user ? 'hidden':''}`}>logout</div>
-              </p>
+              </div>
           </div>
           
           <div className={`absolute ${isProfileOpen.profile ? 'left-7' : ''} flex w-full justify-end items-center rounded-r-lg text-lg cursor-default z-[-1]`}>

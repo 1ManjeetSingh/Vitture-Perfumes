@@ -16,7 +16,6 @@ const Featured = () => {
             try {
                 const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/allproducts/products`); // Your API endpoint
                 const data = await response.json();
-                console.log(data);
                 setProducts(data);
                 setFilteredProducts(data);
             } catch (error) {
