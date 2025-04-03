@@ -4,6 +4,7 @@ import { MongoClient, GridFSBucket } from 'mongodb';
 import ProductDetails from '../models/ProductDetails.js'; // Make sure your model can accept images array
 import { Readable } from 'stream';
 import dotenv from 'dotenv';
+import auth from '../middlewares/auth.js';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Route to upload product
-router.post('/upload-product', upload.array('images', 5), async (req, res) => {
+router.post('/upload-product', auth, upload.array('images', 5), async (req, res) => {
     const client = new MongoClient(mongoURL);
     try {
         await client.connect();

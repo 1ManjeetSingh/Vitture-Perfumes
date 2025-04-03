@@ -78,7 +78,7 @@ const Featured = () => {
                                     <div className='anchor'>Buy Now</div>
                                 </div>
                             </Link>
-                        ))) : (<p>No products found</p>)}
+                        ))) : (<p className='py-6'>Fetching products...</p>)}
                 </div>
             </section>
   )

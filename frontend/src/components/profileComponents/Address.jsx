@@ -1,7 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUser } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Address = () => {
     const [addAddress, setAddAddress] = useState(false);
+    const navigate = useNavigate();
+    const { user } = useUser();
+
+    useEffect(()=>{
+        if(!user){
+            navigate('/');
+        }
+     },[user]);
 
     const [formData, setFormData] = useState({
         country: "India",
@@ -25,67 +35,19 @@ const Address = () => {
     };
 
     const dummyAddress = [
-        {
-            "country": "India",
-            "fullName": "Rahul Sharma",
-            "mobileNumber": "9876543210",
-            "pincode": "110001",
-            "house": "Flat 12B, Tower 5",
-            "area": "Connaught Place",
-            "landmark": "Near Central Park",
-            "city": "New Delhi",
-            "state": "Delhi",
-            isDefault: true,
-        },
-        {
-            "country": "India",
-            "fullName": "Priya Mehta",
-            "mobileNumber": "9823456789",
-            "pincode": "400001",
-            "house": "House No. 25, Green Residency",
-            "area": "Marine Drive",
-            "landmark": "Opposite Oberoi Hotel",
-            "city": "Mumbai",
-            "state": "Maharashtra",
-            isDefault: false,
-        },
-        {
-            "country": "India",
-            "fullName": "Amit Kumar",
-            "mobileNumber": "9900123456",
-            "pincode": "560001",
-            "house": "Apartment 3C, Blue Horizon",
-            "area": "MG Road",
-            "landmark": "Near Brigade Towers",
-            "city": "Bangalore",
-            "state": "Karnataka",
-            isDefault: false,
-        },
-        {
-            "country": "India",
-            "fullName": "Sanya Verma",
-            "mobileNumber": "9811122334",
-            "pincode": "600001",
-            "house": "Villa 22, Orchid Enclave",
-            "area": "Anna Nagar",
-            "landmark": "Near Tower Park",
-            "city": "Chennai",
-            "state": "Tamil Nadu",
-            isDefault: false,
-        },
-        {
-            "country": "India",
-            "fullName": "Rajesh Iyer",
-            "mobileNumber": "9876001234",
-            "pincode": "700001",
-            "house": "Flat No. 9, Sunshine Towers",
-            "area": "Park Street",
-            "landmark": "Opposite Flurys Bakery",
-            "city": "Kolkata",
-            "state": "West Bengal",
-            isDefault: false,
-        }
-    ]
+        // {
+        //     "country": "India",
+        //     "fullName": "Rajesh Iyer",
+        //     "mobileNumber": "9876001234",
+        //     "pincode": "700001",
+        //     "house": "Flat No. 9, Sunshine Towers",
+        //     "area": "Park Street",
+        //     "landmark": "Opposite Flurys Bakery",
+        //     "city": "Kolkata",
+        //     "state": "West Bengal",
+        //     isDefault: false,
+        // }
+    ];
 
     return (
         <>
@@ -103,7 +65,7 @@ const Address = () => {
                             <p className="text-2xl text-gray-700">Add Address</p>
                             <p className="text-4xl text-gray-700">+</p>
                         </div>
-                        {dummyAddress.map((address, index) => (
+                        {dummyAddress?.map((address, index) => (
                             <div
                                 key={index}
                                 className="flex flex-col relative items-start justify-center w-[250px] h-[250px] rounded-md border border-gray-400 p-6 bg-white shadow-md"

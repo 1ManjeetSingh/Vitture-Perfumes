@@ -1,11 +1,13 @@
 /* Center the loader in the middle of the page */
 .loader-container {
+    position: absolute;
     display: flex;
+    inset: 0;
+    z-index: 1000;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #f9f9f9; /* Optional background for contrast */
-    position: relative;
 }
 
 /* Base styles for half-circular rings */

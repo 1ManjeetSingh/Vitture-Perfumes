@@ -26,7 +26,7 @@ const Home = () => {
             </section>
 
             <section className='featuredProducts' id='offerProducts'>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<div className='py-10'>Loading...</div>}>
                     <Featured />
                 </Suspense>
             </section>

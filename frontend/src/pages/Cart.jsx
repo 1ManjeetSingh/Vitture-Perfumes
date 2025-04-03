@@ -6,6 +6,10 @@ import Footer from '../components/footer/Footer';
 import { Link } from "react-router-dom";
 import { RiShoppingCartLine } from "react-icons/ri";
 import '../styles/cart.css'
+import { lazy } from 'react';
+import { useUser } from '../contexts/UserContext';
+const Loader = lazy(() => import('../components/loader/Loader'));
+
 // import ProductListing from './ProductListing';
 
 // const cartItems = [
@@ -45,9 +49,11 @@ const discountedPrice = (price, discount) => {
 }
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(null);
+  const [success, setSuccess] = useState(null);
   const [itemsNo, setItemsNo] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
+  const { user } = useUser();
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
@@ -63,6 +69,7 @@ const Cart = () => {
       const data = await response.json();
       console.log(data);
       setCartItems(data.cartItems);
+      setSuccess(data.success);
     } catch (error) {
       console.error('Error fetching product data:', error);
       setError('Error fetching product data:', error);
@@ -132,15 +139,18 @@ const Cart = () => {
     );
   }, [cartItems]); // Add cartItems as a dependency
 
+  if(success == null){
+    return <Loader />;
+  }
 
   return (
     <>
          {/* No login condition - No user in storage condition */}
-    <div className="flex justify-start items-start h-screen bg-gray-100 p-6">
+    <div className={`flex justify-center items-center h-screen bg-gray-100 p-6 ${!user ? "":"hidden"} pb-[100px]`} style={{boxSizing: "border-box"}}>
             <div className="bg-white shadow-lg rounded-2xl p-6 flex flex-col items-center text-center">
                 <RiShoppingCartLine className="text-6xl text-gray-400" />
                 <h2 className="text-2xl font-semibold mt-4">Your Cart is Empty</h2>
-                <p className="text-gray-500 mt-2">Looks like you haven't added anything to your cart yet.</p>
+                <p className="text-gray-500 mt-2 hidden md:block">Looks like you haven't added anything to your cart yet.</p>
 
                 <div className="flex gap-4 mt-6">
                     <Link to="/login" className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium">
@@ -153,7 +163,7 @@ const Cart = () => {
             </div>
         </div>
 
-      <div className="Cart flex px-6 pt-6 w-[90%] h-[92vh] mx-auto relative">
+      <div className={`Cart flex px-6 pt-6 w-[90%] h-[92vh] mx-auto relative ${!user ? "hidden":""}`}>
         <div className="cart-counter min-w-[320px] h-fit p-4 flex flex-col items-start gap-6 bg-white">
           <h1 className='text-md sm:text-xl'>Subtotal ({itemsNo} items): <span className='font-bold'>₹{subTotal}</span></h1>
           {subTotal < 500 ? <h1 className='text-sm sm:text-lg'>Delivery: <span className='font-semibold'>₹40</span></h1> : <h1 className='text-sm sm:text-lg'>Delivery: <span className='font-semibold'><del className='font-light'>₹40</del> free delivery ✅</span></h1>}

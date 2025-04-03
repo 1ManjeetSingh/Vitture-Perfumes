@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
 import './details.css';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,15 +26,11 @@ const ProductDetails = ({ product }) => {
     }
 
     const handleAddToCart = async () => {
-        const token = localStorage.getItem("token");
-        console.log(token);
-        
-
+        const token = localStorage.getItem("token");        
             if (!token) {
                 navigate("/login");
                 return;
             }
-
         try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems/addItem/${product._id}`, {
                 method: "POST",
@@ -46,11 +41,6 @@ const ProductDetails = ({ product }) => {
                 body: JSON.stringify({ quantity }),
             });
 
-            if (response.status !== 200) {
-                toast.error(data.message || "Failed to add item to cart.");
-                return;
-            } 
-
             const data = await response.json();
 
             if(!data.success){
@@ -58,11 +48,11 @@ const ProductDetails = ({ product }) => {
                 return;
               }
 
-            toast.success(data.message);
+            message.success(data.message);
 
         } catch (error) {
             console.error("Error adding item to cart:", error);
-            toast.error("Something went wrong. Please try again.");
+            message.error("Something went wrong. Please try again.");
         }
     }
 
@@ -71,10 +61,6 @@ const ProductDetails = ({ product }) => {
 
     return (
         <div className='inline-component'>
-            <ToastContainer
-                position="top-center"
-                autoClose={3000} />
-
             <div className="productContainer">
                 <h1 className='leading-tight sm:leading-normal'>{product.name}</h1>
                 <p className="sub-heading leading-tight sm:leading-normal">{product.flavour || "Product Category"}</p>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/productlisting.css';
 import imageCompression from 'browser-image-compression';
-
+import { useUser } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const ProductListing = () => {
     const [images, setImages] = useState([]);
@@ -13,6 +14,16 @@ const ProductListing = () => {
         discount: '',
         description: '',
     });
+
+    const navigate = useNavigate();
+    const { user } = useUser();
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/');
+        }
+    }, [user]);
+
 
     const handleImageChange = async (e) => {
         const selectedFiles = Array.from(e.target.files);

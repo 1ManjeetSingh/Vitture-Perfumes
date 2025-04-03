@@ -2,11 +2,12 @@
 import express from 'express';
 import Review from '../models/AllReview.js';
 import mongoose from 'mongoose';
+import auth from '../middlewares/auth.js';
 
 const router = express.Router();
 
 // POST: Create a new review
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { productId, userName, rating, comment } = req.body;
 
     if (!rating || !comment) {

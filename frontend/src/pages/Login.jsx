@@ -2,9 +2,11 @@ import React from 'react'
 import { Form, message, Input } from 'antd';
 import { RiLoginCircleLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../contexts/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useUser();
 
   const onFinish = async (values) => {
     try {
@@ -24,8 +26,7 @@ const Login = () => {
       
       const data = await response.json();
 
-      console.log(data.user);
-      console.log(data.token);
+      login(data.user);
       
       localStorage.setItem("token", data.token);
       

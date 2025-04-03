@@ -62,7 +62,7 @@ const Product = () => {
 
     return (
         <>
-        <Suspense fallback={<Loader />} >
+        <Suspense fallback={<Loader/>}>
             <div className='product-row'>
                     <FontAwesomeIcon onClick={()=>navigate(-1)} icon={faArrowLeft} className='home home-icon' />
                 <button onClick={handleShare} className='share-icon'>

@@ -24,7 +24,7 @@ const Register = () => {
             if(data.success){
                 message.success("Registration successful");
                 setTimeout(()=>{
-                    navigate("/login");
+                    navigate(-1);
                 },500)
             }
             else message.error(data.message);
@@ -59,9 +59,9 @@ const Register = () => {
                             <button type="submit" className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold p-2 rounded-lg">
                                 Register
                             </button>
-                            <Link to="/login" className="text-yellow-300 hover:text-yellow-400 text-center">
+                            <p onClick={()=>navigate(-1)} className="text-yellow-300 hover:text-yellow-400 text-center cursor-pointer">
                                 Already a member? Login
-                            </Link>
+                            </p>
                         </div>
                     </Form>
                 </div>

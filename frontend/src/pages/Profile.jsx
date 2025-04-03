@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useUser } from "../contexts/UserContext";
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
-
+  const { user } = useUser();
+  
   return (
     <>
       <div className='flex w-full h-[92vh] gap-6'>
@@ -10,7 +13,23 @@ const Profile = () => {
         <div className='left-space h-full w-[220px]'>
         </div>
 
-        <div className='details-container w-full h-full flex flex-col md:pr-8 md:pl-12 py-4 gap-4 justify-start items-center overflow-y-auto custom-scrollbar'>
+        <div className={`details-container w-full h-full flex flex-col md:pr-8 md:pl-12 py-4 gap-4 justify-center items-center overflow-y-auto custom-scrollbar ${!user ? "":"hidden"}`}>
+                   {/* No login condition - No user in storage condition */}
+    <div className="flex justify-center items-center h-screen bg-gray-100 p-6">
+            <div className="bg-white shadow-lg rounded-2xl p-6 flex flex-col items-center text-center">
+                <div className="flex gap-4">
+                    <Link to="/login" className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium">
+                        Sign In
+                    </Link>
+                    <Link to="/register" className="border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-lg font-medium">
+                        Sign Up Now
+                    </Link>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div className={`details-container w-full h-full flex flex-col md:pr-8 md:pl-12 py-4 gap-4 justify-start items-center overflow-y-auto custom-scrollbar ${!user ? "hidden":""}`}>
         <p className='flex w-full bg-[#cecece] text-lg sm:text-2xl font-[600] h-[40px] justify-center items-center mb-2'>
             Your Profile 
           </p>

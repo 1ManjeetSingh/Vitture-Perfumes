@@ -1,44 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import './profileComponents.css';
+import { useUser } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
     const [rating, setRating] = useState();
+    const navigate = useNavigate();
+    const { user } = useUser();
+
+    useEffect(()=>{
+        if(!user){
+            navigate('/');
+        }
+     },[user]);
 
     const handleClick = (rate) => {
         setRating(rate);
     };
 
-    const orderItems = [
-        {
-            id: 1,
-            itemName: `Bacca Bucci® Zeus Men Fashion Sneakers/Running Shoes`,
-            quantity: 2,
-            image: 'https://m.media-amazon.com/images/I/716kSfEScGS._AC_AA180_.jpg',
-            price: 2999,
-            discount: 50,
-            orderDate: 'date',
-            delivered: true,
-        }, {
-            id: 2,
-            itemName: `Bacca Bucci® Zeus Men Fashion Sneakers/Running Shoes`,
-            quantity: 1,
-            image: 'https://m.media-amazon.com/images/I/716kSfEScGS._AC_AA180_.jpg',
-            price: 2999,
-            discount: 20,
-            orderDate: 'date',
-            delivered: true,
-        },
-        {
-            id: 3,
-            itemName: `Bacca Bucci® Zeus Men Fashion Sneakers/Running Shoes`,
-            quantity: 2,
-            image: 'https://m.media-amazon.com/images/I/716kSfEScGS._AC_AA180_.jpg',
-            price: 2999,
-            discount: 50,
-            orderDate: 'date',
-            delivered: false,
-        },
-    ];
+    const orderItems = [];
 
     const discountedPrice = (price, discount) => {
         return Math.round(price * (1 - (discount) / 100) - 0.5);
@@ -56,7 +36,10 @@ const Orders = () => {
                         Your Orders
                     </p>
                     <div className='orders-container w-full h-full flex flex-col gap-4 justify-start items-center overflow-y-auto custom-scrollbar pt-2'>
-                        {orderItems.map((item) => {
+                        {orderItems.length == 0 ? <div className='flex flex-col w-[60%] h-auto items-center gap-6'>
+                            <img src="./emptycart.png" alt="" style={{objectFit: "contain"}}/>
+                            <h1>No Order Placed</h1>
+                        </div> : orderItems?.map((item) => {
                             return (
                                 <div key={item.id} className="order-items flex flex-col w-full bg-white shadow-md rounded-lg">
                                     <div className='pt-2 px-4'>
