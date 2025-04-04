@@ -176,7 +176,7 @@ function App() {
         </div>
 
         {/** <-------------------- Profile Options To Show Selected Darker------------------------>*/}
-        <div className={`profile-options absolute top-[8vh] left-0 z-[999] transform transition-transform duration-500 ease-out ${isProfileOpen.profile ? 'translate-x-0' : 'translate-x-[-100%]'} h-[92vh] w-[220px] border border-gray-300 bg-white shadow-[0_0_10px_0_rgba(0,0,0,0.2)] flex flex-col gap-6`}>
+        <div className={`profile-options absolute top-[8vh] left-0 z-[99] transform transition-transform duration-500 ease-out ${isProfileOpen.profile ? 'translate-x-0' : 'translate-x-[-100%]'} h-[92vh] w-[220px] border border-gray-300 bg-white shadow-[0_0_10px_0_rgba(0,0,0,0.2)] flex flex-col gap-6`}>
           <div className='h-[92vh] flex flex-col w-full justify-start'>
             <Link to={'/profile'}>
               <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.details ? 'bg-[#cfcfcf]' : ''}`}>{!user ? "Login" : "Details"}</div>

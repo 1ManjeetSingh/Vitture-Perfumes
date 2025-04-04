@@ -72,56 +72,88 @@ const Cart = () => {
       setSuccess(data.success);
     } catch (error) {
       console.error('Error fetching product data:', error);
-      setError('Error fetching product data:', error);
+      message.error('Error fetching product data:');
     }
   }
 
   const handleIncrease = async (id) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems/increaseQuantity/${id}`);
-      if (response.status == 200) {
-        const updatedItem = await response.json();
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems/increaseQuantity/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        const { cartItem } = await response.json();
         setCartItems((prevCartItems) =>
           prevCartItems.map((item) =>
-            item.id === id ? { ...item, quantity: updatedItem.cartItem.quantity } : item
+            item.id === id ? { ...item, quantity: cartItem.quantity } : item
           )
         );
+      } else {
+        const data = await response.json();
+        message.error(data.message);
+        console.error(data.message);
       }
     } catch (error) {
-      console.error('Error fetching product data:', error);
-      setError('Error fetching product data:', error);
+      console.error(error);
+      message.error("Error updating cart");
     }
   };
+  
 
   const handleDecrease = async (id) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems/decreaseQuantity/${id}`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems/decreaseQuantity/${id}`,{
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+      });
       if (response.status == 200) {
-        const updatedItem = await response.json();
+        const { cartItem } = await response.json();
         setCartItems((prevCartItems) =>
           prevCartItems.map((item) =>
-            item.id === id ? { ...item, quantity: updatedItem.cartItem.quantity } : item
+            item.id === id ? { ...item, quantity: cartItem.quantity } : item
           ));
       }
+      else{
+        const data = await response.json();
+        message.error(data.message);
+        console.error(data.message);      }
     } catch (error) {
-      console.error('Error fetching product data:', error);
-      setError('Error fetching product data:', error);
+      console.error(error);
+      message.error('Error fetching product data:');
     }
   };
 
   const handleDeleteItem = async (id) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems/deleteItem/${id}`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems/deleteItem/${id}`,{
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+      });
       if (response.status == 200) {
-        const updatedItem = await response.json();
+        const { cartItem } = await response.json();
         setCartItems((prevCartItems) =>
           prevCartItems.filter((item) =>
             item.id !== id
           ));
       }
+      else{
+        const data = await response.json();
+        message.error(data.message);
+        console.error(data.message);      }
     } catch (error) {
-      console.error('Error fetching product data:', error);
-      setError('Error fetching product data:', error);
+      console.error(error);
+      message.error('Error fetching product data:');
     }
   }
 

@@ -43,7 +43,10 @@ const ProductDetails = ({ product }) => {
 
             const data = await response.json();
 
-            if(!data.success){
+            if(response.status === 500){
+                message.error("Internal Server Error");
+                return;
+            } else if(!data.success){
                 navigate("/login");
                 return;
               }

@@ -1,6 +1,64 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
+// Cart Item Schema
+const CartItemSchema = new mongoose.Schema({
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ProductDetails',
+        required: true,
+    },
+    quantity: {
+        type: Number,
+        required: true,
+    },
+    savedForLater: {
+        type: Boolean,
+        required: true,
+        default: false,
+    }
+});
+
+const AddressSchema = new mongoose.Schema({
+    fullName: { type: String, required: true },
+    mobileNumber: { type: String, required: true, match: /^[0-9]{10}$/ },
+    pincode: { type: String, required: true, match: /^[0-9]{6}$/ },
+    house: { type: String, required: true },
+    area: { type: String, required: true },
+    landmark: { type: String },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    country: { type: String, required: true, default: "India" }, 
+    isDefault: { type: Boolean, default: false },
+});
+
+const reviewSchema = new mongoose.Schema({
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ProductDetails',
+        required: true,
+    },
+    userName: {
+        type: String,
+        default: 'User',
+    },
+    rating: {
+        type: Number,
+        required: true,
+         min: 1,
+        max: 5,
+    },
+    comment: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
+
 const UserSchema = new mongoose.Schema({
     fullName: { 
         type: String, 
@@ -21,7 +79,13 @@ const UserSchema = new mongoose.Schema({
         required: false,
     },
 
-    address: [{ type: mongoose.Schema.Types.ObjectId, ref: "Address" }],
+    address: [AddressSchema],
+
+    cartItems: [CartItemSchema],
+
+    order: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
+
+    reviews: [reviewSchema],
 
     password: { 
         type: String, 
