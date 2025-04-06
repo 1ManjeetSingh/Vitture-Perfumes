@@ -4,6 +4,7 @@ import '../styles/productlisting.css';
 import imageCompression from 'browser-image-compression';
 import { useUser } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import { message } from 'antd';
 
 const ProductListing = () => {
     const [images, setImages] = useState([]);
@@ -62,12 +63,19 @@ const ProductListing = () => {
 
         // Append images to FormData
         images.forEach((image) => data.append('images', image));
-
+        const token = JSON.parse(localStorage.getItem("token"));
         try {
+            const hide = message.loading('Wait...', 0);
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/upload/upload-product`, data, {
-                headers: { 'Content-Type': 'multipart/form-data' },
+                headers: { 'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token.value}`,
+                 },
             });
             console.log('Upload response:', response.data);
+            if(response.data.success){
+                hide();
+                message.success("Item added successfully");
+            }
             // Clear form and images after successful upload
             setImages([]);
             setFormData({
@@ -79,6 +87,8 @@ const ProductListing = () => {
             });
         } catch (error) {
             console.error('Error uploading product:', error.response?.data || error.message);
+            hide();
+            message.error('Error uploading product:');
         }
     };
 

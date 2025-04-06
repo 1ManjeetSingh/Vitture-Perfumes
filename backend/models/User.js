@@ -32,32 +32,6 @@ const AddressSchema = new mongoose.Schema({
     isDefault: { type: Boolean, default: false },
 });
 
-const reviewSchema = new mongoose.Schema({
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ProductDetails',
-        required: true,
-    },
-    userName: {
-        type: String,
-        default: 'User',
-    },
-    rating: {
-        type: Number,
-        required: true,
-         min: 1,
-        max: 5,
-    },
-    comment: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-});
 
 const UserSchema = new mongoose.Schema({
     fullName: { 
@@ -85,12 +59,17 @@ const UserSchema = new mongoose.Schema({
 
     order: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
 
-    reviews: [reviewSchema],
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
 
     password: { 
         type: String, 
         required: true, 
         minlength: 6 
+    },
+
+    isAdmin: {
+        type: Boolean,
+        default: false,
     },
 
     createdAt: { 

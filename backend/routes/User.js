@@ -2,6 +2,7 @@ import express from 'express';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';  // For password hashing
 import jwt from 'jsonwebtoken';
+import auth from '../middlewares/auth.js';
 
 const router = express.Router();
 
@@ -55,6 +56,77 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: "Internal Server Error", error: err });
     }
 })
+
+router.put("/updateProfile", auth,async (req, res) => {
+    try {
+      const formData = req.body;
+      var profile = "Profile";
+  
+      // Assuming `req.user._id` is coming from auth middleware
+      const findUser = await User.findById(req.user._id);
+  
+      if (!findUser) {
+        return res.status(400).json({ success: false, message: "User not found" });
+      }
+  
+      // Check password
+      const isMatch = await bcrypt.compare(formData.password, findUser.password);
+  
+      if (!isMatch) {
+        return res.status(400).json({ success: false, message: "Invalid password" });
+      }
+  
+      // Update fields (excluding password)
+      for (let key in formData) {
+        if(key === "newPassword"){
+            const hashedPassword = await bcrypt.hash(formData.newPassword, 10);
+            findUser.password = hashedPassword;
+            profile = "Password";
+            continue;
+        }
+        else if (key !== "password") {
+          findUser[key] = formData[key];
+        }
+      }
+  
+      await findUser.save();
+  
+      return res.status(200).json({ success: true, message: `${profile} updated successfully` });
+  
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: "Server error" });
+    }
+  });
+
+  router.post('/addAddress', auth, async (req, res) => {
+    try {
+      const { formData } = req.body;
+      const findUser = await User.findById(req.user._id);
+  
+      if (!findUser) {
+        return res.status(400).json({ success: false, message: "User not found" });
+      }
+  
+      // Push the new address to the user's address array
+      if(findUser.address.length === 0){
+        formData.isDefault = true;
+      }
+
+      findUser.address.push(formData);
+      const addressArray = findUser.address;
+
+      // Save the updated user document
+      await findUser.save();
+  
+      return res.status(200).json({ success: true, message: "New Address added", addressArray });
+  
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+  
 
 
 export default router;

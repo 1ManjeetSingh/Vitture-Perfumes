@@ -3,20 +3,26 @@ import express from 'express';
 import Review from '../models/AllReview.js';
 import mongoose from 'mongoose';
 import auth from '../middlewares/auth.js';
+import User from "../models/User.js";
 
 const router = express.Router();
 
 // POST: Create a new review
 router.post('/', auth, async (req, res) => {
-    const { productId, userName, rating, comment } = req.body;
+    const { productId, rating, comment } = req.body;
 
     if (!rating || !comment) {
         return res.status(400).json({ message: 'All fields are required' });
       }
 
     try {
-        const newReview = new Review({ productId, userName, rating, comment });
+        const userFound = await User.findById(req.user._id);
+        const newReview = new Review({ productId, userName: userFound.fullName, rating, comment });
         await newReview.save();
+
+        userFound.reviews.push(newReview._id);
+        userFound.save();
+
         res.status(201).json(newReview);
     } catch (error) {
         console.error('Error creating review:', error);

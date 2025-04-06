@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 const Address = () => {
     const [addAddress, setAddAddress] = useState(false);
     const navigate = useNavigate();
     const { user } = useUser();
+    const token = JSON.parse(localStorage.getItem("token"));
+    const [addressArray, setAddressArray] = useState(user?.address);
+    const now = Date.now();
 
-    useEffect(()=>{
-        if(!user){
+
+    useEffect(() => {
+        if (!user) {
             navigate('/');
         }
-     },[user]);
+    }, [user]);
 
     const [formData, setFormData] = useState({
         country: "India",
@@ -29,10 +34,62 @@ const Address = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form Submitted:", formData);
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/user/addAddress`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token.value}`,
+                },
+                body: JSON.stringify({ formData }), // wrap inside an object
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                message.error(data.message);
+                return;
+            }
+
+            const data = await response.json(); // Don't forget await here!
+
+            message.success(data.message);
+
+            user.address = data.addressArray;
+
+            const User = {
+                value: user,
+                expiry: now + 3600000, // 1 hour = 3600000 ms
+                lastAccessed: now,
+            };
+
+            localStorage.setItem("user", JSON.stringify(User))
+
+            setAddressArray(data.addressArray);
+            setAddAddress(false);
+
+        } catch (err) {
+            message.error("Something went wrong: " + err.message);
+        }
+
     };
+
+    useEffect(() => {
+        if (!addAddress) {
+            setFormData({
+                country: "India",
+                fullName: "",
+                mobileNumber: "",
+                pincode: "",
+                house: "",
+                area: "",
+                landmark: "",
+                city: "",
+                state: "",
+            })
+        }
+    }, [addAddress])
 
     const dummyAddress = [
         // {
@@ -57,7 +114,7 @@ const Address = () => {
                 </div>
 
                 <div className='w-full overflow-y-auto h-full md:pl-10 md:pr-6 py-4'>
-                <p className='flex w-full bg-[#cecece] text-lg sm:text-2xl font-[600] h-[40px] justify-center items-center mb-2'>
+                    <p className='flex w-full bg-[#cecece] text-lg sm:text-2xl font-[600] h-[40px] justify-center items-center mb-2'>
                         Your Address
                     </p>
                     {addAddress == false ? <div className="flex flex-wrap w-full justify-center p-2 gap-4">
@@ -65,7 +122,7 @@ const Address = () => {
                             <p className="text-2xl text-gray-700">Add Address</p>
                             <p className="text-4xl text-gray-700">+</p>
                         </div>
-                        {dummyAddress?.map((address, index) => (
+                        {addressArray?.map((address, index) => (
                             <div
                                 key={index}
                                 className="flex flex-col relative items-start justify-center w-[250px] h-[250px] rounded-md border border-gray-400 p-6 bg-white shadow-md"
@@ -81,16 +138,16 @@ const Address = () => {
                                     <span>Remove</span>
                                 </div>
                                 <div className='absolute top-2 right-3 text-md text-[#7796C6] flex gap-2 cursor-default overflow-hidden whitespace-nowrap text-ellipsis'>
-                                {!address.isDefault==false ? <button>✅</button> :
-                                    <button>Make Default</button>
-                                }
+                                    {!address.isDefault == false ? <button>✅</button> :
+                                        <button>Make Default</button>
+                                    }
                                 </div>
                             </div>
                         ))}
                     </div> :
                         <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-lg">
                             <h2 className="flex text-2xl font-semibold mb-6 gap-2 items-center">
-                            <svg onClick={() => setAddAddress(false)} xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+                                <svg onClick={() => setAddAddress(false)} xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" /></svg>
                                 Shipping Address</h2>
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 {/* Country */}

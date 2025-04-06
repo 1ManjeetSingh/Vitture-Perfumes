@@ -26,7 +26,7 @@ const ProductDetails = ({ product }) => {
     }
 
     const handleAddToCart = async () => {
-        const token = localStorage.getItem("token");        
+        const token = JSON.parse(localStorage.getItem("token"));        
             if (!token) {
                 navigate("/login");
                 return;
@@ -36,7 +36,7 @@ const ProductDetails = ({ product }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token.value}`
                 },
                 body: JSON.stringify({ quantity }),
             });

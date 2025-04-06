@@ -32,9 +32,9 @@
     .item-image{
         width: 90px;
     }
-    .cart-items-bottom-buttons{
+    /* .cart-items-bottom-buttons{
         display: none;
-    }
+    } */
     .card-details h2:first-of-type{
         display: none;
     }

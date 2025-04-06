@@ -1,12 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useUser } from "../contexts/UserContext";
 import { Link } from 'react-router-dom';
-import { Input } from 'antd';
+import { Input, message } from 'antd';
 
 const Profile = () => {
+
   const { user } = useUser();
+
+  const token = JSON.parse(localStorage.getItem("token"));
+  
   const [editProfile, setEditProfile] = useState(false);
   const editProfileRef = useRef(null);
+  const now = Date.now();
 
   // to change Name and Email
   const [formData, setFormData] = useState({
@@ -19,10 +24,48 @@ const Profile = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
+  
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/user/updateProfile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token.value}`,
+        },
+        body: JSON.stringify(
+          formData
+        ),
+      });
+  
+      if (!response.ok) {
+        const data = await response.json();
+        message.error(data.message);
+        return;
+      }
+  
+      const data = await response.json();
+      message.success(data.message);
+
+      // Updating user in local storage
+      user.fullName = formData.fullName;
+      user.email = formData.email;
+
+      const User = {
+        value: user,
+        expiry: now + 3600000, // 1 hour = 3600000 ms
+        lastAccessed: now,
+      };
+      
+      localStorage.setItem("user", JSON.stringify(User))
+
+      setEditProfile(false);
+    } catch (err) {
+      message.error("Something went wrong: " + err.message);
+    }
   };
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -61,9 +104,44 @@ const Profile = () => {
     setFormDataPhone({ ...formDataPhone, [e.target.name]: e.target.value });
   }
 
-  const handleSubmitPhone = (e) => {
+  const handleSubmitPhone = async(e) => {
     e.preventDefault();
-    console.log("Form Submitted:", formDataPhone);
+      
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/user/updateProfile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token.value}`,
+        },
+        body: JSON.stringify(
+          formDataPhone
+        ),
+      });
+  
+      if (!response.ok) {
+        const data = await response.json();
+        message.error(data.message);
+        return;
+      }
+  
+      const data = await response.json(); // Don't forget await here!
+      message.success(data.message);
+
+      user.phoneNo = formDataPhone.phoneNo;
+
+      const User = {
+        value: user,
+        expiry: now + 3600000, // 1 hour = 3600000 ms
+        lastAccessed: now,
+      };
+      
+      localStorage.setItem("user", JSON.stringify(User))
+
+      setEditPhonNo(false);
+    } catch (err) {
+      message.error("Something went wrong: " + err.message);
+    }
   };
 
   useEffect(() => {
@@ -94,7 +172,7 @@ const Profile = () => {
   const editPasswordRef = useRef(null);
 
   const [formDataPassword, setFormDataPassword] = useState({
-    oldPassword: "",
+    password: "",
     newPassword: "",
   });
 
@@ -102,10 +180,33 @@ const Profile = () => {
     setFormDataPassword({ ...formDataPassword, [e.target.name]: e.target.value });
   };
 
-  const handleSubmitPassword = (e) => {
+  const handleSubmitPassword = async(e) => {
     e.preventDefault();
-    console.log("Password Update Request:", formDataPassword);
-    // Call API to update password
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/user/updateProfile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token.value}`,
+        },
+        body: JSON.stringify(
+          formDataPassword
+        ),
+      });
+  
+      if (!response.ok) {
+        const data = await response.json();
+        message.error(data.message);
+        return;
+      }
+  
+      const data = await response.json(); // Don't forget await here!
+      message.success(data.message);
+      setEditPassword(false);
+
+    } catch (err) {
+      message.error("Something went wrong: " + err.message);
+    }
   };
 
   useEffect(() => {
@@ -124,7 +225,7 @@ const Profile = () => {
   useEffect(() => {
     if (!editPassword) {
       setFormDataPassword({
-        oldPassword: "",
+        password: "",
         newPassword: "",
       });
     }
@@ -295,10 +396,10 @@ const Profile = () => {
           <form onSubmit={handleSubmitPassword} className="space-y-4 w-full sm:w-[70%] p-6">
             <div>
               <label className="block text-sm font-medium">Old Password<span className='text-red-900 text-lg'>*</span></label>
-              <input
-                type="password"
-                name="oldPassword"
-                value={formDataPassword.oldPassword}
+              <Input.Password
+                type="text"
+                name="password"
+                value={formDataPassword.password}
                 onChange={handleChangePassword}
                 className="w-full border rounded-lg p-2 bg-gray-100"
                 required
@@ -307,8 +408,8 @@ const Profile = () => {
             </div>
             <div>
               <label className="block text-sm font-medium">New Password<span className='text-red-900 text-lg'>*</span></label>
-              <input
-                type="password"
+              <Input.Password
+                type="text"
                 name="newPassword"
                 value={formDataPassword.newPassword}
                 onChange={handleChangePassword}

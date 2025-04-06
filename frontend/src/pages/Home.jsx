@@ -12,7 +12,7 @@ const Home = () => {
         <>
             <section className='highlights'>
                 <img src='https://irfe.com/wp-content/uploads/2024/04/A-collection-of-the-expensive-perfumes-for-women-displayed-on-a-luxurious-vanity.jpg' loading="lazy" alt='' />
-                <div className='offer-heading'>
+                <div className='offer-heading' style={{userSelect: "none"}}>
                     Special Offer
                     <span></span>
                 </div>
@@ -21,7 +21,7 @@ const Home = () => {
                     <span></span>
                     <span></span>
                     <span></span>
-                    Buy any 3 for 1199/- Only
+                    Buy any 3 for 1999/- Only
                 </a>
             </section>
 

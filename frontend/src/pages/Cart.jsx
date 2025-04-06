@@ -56,14 +56,14 @@ const Cart = () => {
   const { user } = useUser();
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("token");
+  const token = JSON.parse(localStorage.getItem("token"));
 
   const fetchCartItems = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems`,
         {
           method: 'GET',
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token.value}` },
         }
       );
       const data = await response.json();
@@ -82,7 +82,7 @@ const Cart = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token.value}`,
         },
       });
   
@@ -111,7 +111,7 @@ const Cart = () => {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token.value}`
         },
       });
       if (response.status == 200) {
@@ -137,7 +137,7 @@ const Cart = () => {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token.value}`
         },
       });
       if (response.status == 200) {

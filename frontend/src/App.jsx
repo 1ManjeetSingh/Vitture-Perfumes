@@ -103,7 +103,6 @@ function App() {
     }
   }, [location.pathname]);
 
-
   useEffect(() => {
     const fetchdata = () => {
       // setTimeout(() => {
@@ -166,6 +165,9 @@ function App() {
             <Link to={'/user_address'}>
               <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.address ? 'bg-[#cfcfcf]' : ''} ${!user ? 'hidden':''}`}>Address</div>
             </Link>
+            <Link to={'/productlist'}>
+              <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${isProfileOpen.listing ? 'bg-[#cfcfcf]' : ''} ${!user ? 'hidden':''} ${user?.isAdmin ? "":"hidden"}`}>Add-Product</div>
+            </Link>
             <div onClick={()=>logout()}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${!user ? 'hidden':''}`}>Logout</div>
               </div>
@@ -188,7 +190,7 @@ function App() {
               <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.address ? 'bg-[#cfcfcf]' : ''} ${!user ? 'hidden':''}`}>Address</div>
             </Link>
             <Link to={'/productlist'}>
-              <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.listing ? 'bg-[#cfcfcf]' : ''} ${!user ? 'hidden':''}`}>List New Product</div>
+              <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-lg font-semibold cursor-default ${isProfileOpen.listing ? 'bg-[#cfcfcf]' : ''} ${!user ? 'hidden':''} ${user?.isAdmin ? "":"hidden"}`}>Add-Product</div>
             </Link>
             <div onClick={()=>logout()}>
                 <div className={`flex w-full justify-start border-b border-gray-300 p-2 text-md sm:text-lg font-semibold cursor-default ${!user ? 'hidden':''}`}>logout</div>

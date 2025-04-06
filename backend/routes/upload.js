@@ -62,10 +62,10 @@ router.post('/upload-product', auth, upload.array('images', 5), async (req, res)
 
         await product.save();
 
-        res.status(200).json({ message: 'Product uploaded successfully', product });
+        res.status(200).json({ success: true, message: 'Product uploaded successfully', product });
     } catch (error) {
         console.error('Error uploading product:', error);
-        res.status(500).json({ message: 'An error occurred during the upload' });
+        res.status(500).json({ success: false, message: 'An error occurred during the upload' });
     } finally {
         await client.close(); // Ensure that the client is closed after the operation
     }

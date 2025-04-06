@@ -23,7 +23,7 @@ const Navbar = ({ setIsOpen }) => {
             <div>
             <Link to="/"><img src={vImage} alt="V" title='Home' loading="lazy" /></Link>
             </div>
-            <h1 className='text-lg sm:text-2xl'>VITTURÉ</h1>
+            <h1 className='text-lg sm:text-2xl' style={{userSelect: "none"}}>VITTURÉ</h1>
             <div>
                 <Link to="/profile"><FontAwesomeIcon icon={faUser} className='fontawesome profile w-5 h-5' /></Link>
                 <Link to="/cart"><FontAwesomeIcon icon={faCartShopping} className='fontawesome cart w-5 h-5' /></Link>

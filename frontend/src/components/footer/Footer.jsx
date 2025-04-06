@@ -20,7 +20,7 @@ const Footer = () => {
      <footer className={showFooter==true ? "":"hidden"}>
       <div className="footer-content">
         <div className="footer-column">
-          <h4>Customer Service</h4>
+          <h4 style={{userSelect: "none"}}>Customer Service</h4>
           <ul>
             <li><Link to="" className='a'>Contact Us</Link></li>
             <li><Link to="" className='a'>Shipping & Returns</Link></li>
@@ -28,7 +28,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer-column">
-          <h4>Company</h4>
+          <h4 style={{userSelect: "none"}}>Company</h4>
           <ul>
             <li><Link to="" className='a'>About Us</Link></li>
             <li><Link to="" className='a'>Careers</Link></li>
@@ -36,7 +36,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer-column">
-          <h4>Follow Us</h4>
+          <h4 style={{userSelect: "none"}}>Follow Us</h4>
           <ul className="social-icons">
             <li>
             <Link to="/" className='a'><FontAwesomeIcon icon={faFacebook} /></Link>
