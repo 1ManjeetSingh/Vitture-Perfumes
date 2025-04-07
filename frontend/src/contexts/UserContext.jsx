@@ -22,14 +22,12 @@ export const UserProvider = ({ children }) => {
 
     const Token = {
       value: data.token,
-      expiry: now + 3600000, // 1 hour = 3600000 ms
-      lastAccessed: now,
+      expiry: now + 7200000,
     };
 
     const User = {
       value: data.user,
-      expiry: now + 3600000, // 1 hour = 3600000 ms
-      lastAccessed: now,
+      expiry: now + 7200000,
     };
 
     localStorage.setItem("user", JSON.stringify(User))

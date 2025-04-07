@@ -32,7 +32,7 @@ const Profile = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token.value}`,
+          "Authorization": `Bearer ${token?.value}`,
         },
         body: JSON.stringify(
           formData
@@ -54,8 +54,7 @@ const Profile = () => {
 
       const User = {
         value: user,
-        expiry: now + 3600000, // 1 hour = 3600000 ms
-        lastAccessed: now,
+        expiry: now + 7200000, // 1 hour = 3600000 ms
       };
       
       localStorage.setItem("user", JSON.stringify(User))
@@ -112,7 +111,7 @@ const Profile = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token.value}`,
+          "Authorization": `Bearer ${token?.value}`,
         },
         body: JSON.stringify(
           formDataPhone
@@ -132,8 +131,7 @@ const Profile = () => {
 
       const User = {
         value: user,
-        expiry: now + 3600000, // 1 hour = 3600000 ms
-        lastAccessed: now,
+        expiry: now + 7200000, // 1 hour = 3600000 ms
       };
       
       localStorage.setItem("user", JSON.stringify(User))
@@ -187,7 +185,7 @@ const Profile = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token.value}`,
+          "Authorization": `Bearer ${token?.value}`,
         },
         body: JSON.stringify(
           formDataPassword

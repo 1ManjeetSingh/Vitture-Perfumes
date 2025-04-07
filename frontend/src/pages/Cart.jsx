@@ -63,11 +63,10 @@ const Cart = () => {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems`,
         {
           method: 'GET',
-          headers: { Authorization: `Bearer ${token.value}` },
+          headers: { Authorization: `Bearer ${token?.value}` },
         }
       );
       const data = await response.json();
-      console.log(data);
       setCartItems(data.cartItems);
       setSuccess(data.success);
     } catch (error) {
@@ -82,7 +81,7 @@ const Cart = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token.value}`,
+          Authorization: `Bearer ${token?.value}`,
         },
       });
   
@@ -111,7 +110,7 @@ const Cart = () => {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token.value}`
+            Authorization: `Bearer ${token?.value}`
         },
       });
       if (response.status == 200) {
@@ -137,7 +136,7 @@ const Cart = () => {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token.value}`
+            Authorization: `Bearer ${token?.value}`
         },
       });
       if (response.status == 200) {

@@ -60,8 +60,7 @@ const Address = () => {
 
             const User = {
                 value: user,
-                expiry: now + 3600000, // 1 hour = 3600000 ms
-                lastAccessed: now,
+                expiry: now + 7200000, // 1 hour = 3600000 ms
             };
 
             localStorage.setItem("user", JSON.stringify(User))

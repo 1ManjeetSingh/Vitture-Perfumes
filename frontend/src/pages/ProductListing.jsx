@@ -68,7 +68,7 @@ const ProductListing = () => {
             const hide = message.loading('Wait...', 0);
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/upload/upload-product`, data, {
                 headers: { 'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${token.value}`,
+                    Authorization: `Bearer ${token?.value}`,
                  },
             });
             console.log('Upload response:', response.data);
