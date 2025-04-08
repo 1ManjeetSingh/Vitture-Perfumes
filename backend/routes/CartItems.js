@@ -25,6 +25,7 @@ router.get("/", auth, async (req, res) => {
             image: item.productId?.images?.[0] ?? null,
             price: item.productId?.price,
             discount: item.productId?.discount,
+            isChecked: item.isChecked,
             savedForLater: item.savedForLater,
         }));
 
@@ -38,7 +39,6 @@ router.get("/", auth, async (req, res) => {
 router.post('/addItem/:id', auth, async (req, res) => {
     const { quantity } = req.body;
     const productId = req.params.id;
-
     try {
         const userFound = await User.findById(req.user._id);
 
@@ -49,7 +49,7 @@ router.post('/addItem/:id', auth, async (req, res) => {
         const existingCartItem = userFound.cartItems.find(item => item.productId.toString() === productId);
 
         if (!existingCartItem) {
-            userFound.cartItems.push({ productId, quantity });
+            userFound.cartItems.push({ productId, quantity,  });
         } else {
             existingCartItem.quantity += quantity;
         }
@@ -110,6 +110,28 @@ router.put("/increaseQuantity/:id", auth, async (req, res) => {
         res.status(200).json({ success: true, message: "Quantity increased by 1", cartItem });
     } catch (error) {
         res.status(500).json({ success: false, message: "Failed to increase quantity", error: error.message });
+    }
+});
+
+router.put("/unCheck", auth, async (req, res) => {
+    try {
+        const { productId } = req.body
+        
+        const userFound = await User.findById(req.user._id);
+
+        if (!userFound) return res.status(404).json({ success: false, message: "User not found" });
+
+        const cartItem = userFound.cartItems.find(item => item._id.toString() === productId);
+
+        if (!cartItem) return res.status(404).json({ success: false, message: "Cart item not found" });
+
+        cartItem.isChecked = !cartItem.isChecked;
+
+        await userFound.save();
+        res.status(200).json({ success: true, message: "successful", cartItem });
+
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Please try again", error: error.message });
     }
 });
 

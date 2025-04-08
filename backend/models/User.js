@@ -12,6 +12,11 @@ const CartItemSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    isChecked: {
+        type: Boolean,
+        required: true,
+        default: true,
+    },
     savedForLater: {
         type: Boolean,
         required: true,

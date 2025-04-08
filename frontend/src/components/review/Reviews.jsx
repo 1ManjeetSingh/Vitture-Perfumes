@@ -27,9 +27,7 @@ const Reviews = ({ id }) => {
             }
             const data = await response.json();
             setReviews(data);
-            console.log(data);
-            console.log("user",user);
-            
+
         } catch (error) {
             console.error('Error fetching reviews:', error);
         }
@@ -41,11 +39,11 @@ const Reviews = ({ id }) => {
 
     useEffect(()=>{
         setUserReviews(
-            reviews.filter((review) => user.reviews.includes(review._id.toString()))
+            reviews?.filter((review) => user?.reviews?.includes(review._id.toString()))
           );
           
         setOtherReviews(
-            reviews.filter((review)=> !user.reviews.includes(review._id.toString()))
+            reviews?.filter((review)=> !user?.reviews?.includes(review._id.toString()))
         );
         
     },[reviews])
@@ -173,7 +171,7 @@ const Reviews = ({ id }) => {
                     <p className="underline"></p>
                 </div>
             </form>
-            {reviews.length > 0 ? <>
+            {reviews && reviews.length > 0 ? <>
                 {userReviews.slice(0, reviewsLength).map((review) => (
                     <div key={review._id} className="review-card">
                       <h4>{review.userName}</h4>

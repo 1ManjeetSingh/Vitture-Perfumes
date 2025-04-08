@@ -54,7 +54,7 @@ const Profile = () => {
 
       const User = {
         value: user,
-        expiry: now + 7200000, // 1 hour = 3600000 ms
+        expiry: now + 3600000, // 1 hour = 3600000 ms
       };
       
       localStorage.setItem("user", JSON.stringify(User))
@@ -131,7 +131,7 @@ const Profile = () => {
 
       const User = {
         value: user,
-        expiry: now + 7200000, // 1 hour = 3600000 ms
+        expiry: now + 3600000, // 1 hour = 3600000 ms
       };
       
       localStorage.setItem("user", JSON.stringify(User))

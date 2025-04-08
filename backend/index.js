@@ -5,11 +5,11 @@ import uploadRoutes from './routes/upload.js';
 import productImagesRoute from './routes/productImages.js';
 import reviewsRoute from './routes/reviews.js';
 import CartItemsRoute from './routes/CartItems.js';
-import UserRouter from './routes/User.js';
+import UserRoute from './routes/User.js';
+import gatewayRoute from './routes/gateway.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
-
 dotenv.config();
 
 const app = express();
@@ -49,7 +49,8 @@ connectDB()
         app.use('/api/productImages', productImagesRoute);
         app.use('/api/reviews', reviewsRoute);
         app.use('/api/cartItems', CartItemsRoute);
-        app.use('/api/user', UserRouter);
+        app.use('/api/user', UserRoute);
+        app.use('/api/gateway', gatewayRoute);
         // Start server
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);

@@ -9,11 +9,10 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
+    if (storedUser && (storedUser.expiry >= Date.now())) {
       setUser(storedUser.value);
     }
   }, []);
-
 
   const login = (data) => {
 

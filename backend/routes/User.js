@@ -99,6 +99,36 @@ router.put("/updateProfile", auth,async (req, res) => {
     }
   });
 
+  router.put("/default-address", auth, async (req, res) => {
+    try {
+      const { addressId } = req.body;
+  
+      if (!addressId) {
+        return res.status(400).json({ success: false, message: "Address ID is required" });
+      }
+  
+      const findUser = await User.findById(req.user._id);
+      if (!findUser) {
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
+  
+      // Set only the matching address as default
+      findUser.address = findUser.address.map(addr => ({
+        ...addr.toObject(), // ensure it's a plain object
+        isDefault: addr._id.toString() === addressId.toString()
+      }));
+  
+      await findUser.save();
+  
+      return res.status(200).json({ success: true, message: "Default address updated successfully" });
+  
+    } catch (err) {
+      console.error("Error in /default-address:", err);
+      res.status(500).json({ success: false, message: "Server error", error: err.message });
+    }
+  });
+  
+
   router.post('/addAddress', auth, async (req, res) => {
     try {
       const { formData } = req.body;

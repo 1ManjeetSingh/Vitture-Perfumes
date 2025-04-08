@@ -8,7 +8,12 @@ const Address = () => {
     const navigate = useNavigate();
     const { user } = useUser();
     const token = JSON.parse(localStorage.getItem("token"));
-    const [addressArray, setAddressArray] = useState(user?.address);
+
+    // Move the selected address to the front
+    const selected = user?.address.find(addr => addr.isDefault === true);
+    const others = user?.address.filter(addr => addr.isDefault === false);
+    const [addressArray, setAddressArray] = useState([selected, ...others]);
+
     const now = Date.now();
 
 
@@ -60,7 +65,7 @@ const Address = () => {
 
             const User = {
                 value: user,
-                expiry: now + 7200000, // 1 hour = 3600000 ms
+                expiry: now + 3600000, // 1 hour = 3600000 ms
             };
 
             localStorage.setItem("user", JSON.stringify(User))
@@ -89,6 +94,49 @@ const Address = () => {
             })
         }
     }, [addAddress])
+
+    const handleMakeDefault = async (id) => {
+        try {
+            const updatedAddresses = user.address.map(addr => ({
+                ...addr,
+                isDefault: addr._id === id
+            }));
+
+            // Move the selected address to the front
+            const selected = updatedAddresses.find(addr => addr._id === id);
+            const others = updatedAddresses.filter(addr => addr._id !== id);
+            const reordered = [selected, ...others];
+
+            //   Send to backend to persist change
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/user/default-address`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token?.value}`
+                },
+                body: JSON.stringify({ addressId: id })
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to update default address");
+            }
+
+            setAddressArray(reordered)
+            user.address = reordered;
+            // Update local state (if needed)
+            const User = {
+                value: user,
+                expiry: Date.now() + 3600000, // 1 hour = 3600000 ms
+            };
+
+            localStorage.setItem("user", JSON.stringify(User));
+
+            message.success("Default address updated");
+
+        } catch (error) {
+            message.error(error.message || "Something went wrong");
+        }
+    };
 
     const dummyAddress = [
         // {
@@ -137,8 +185,8 @@ const Address = () => {
                                     <span>Remove</span>
                                 </div>
                                 <div className='absolute top-2 right-3 text-md text-[#7796C6] flex gap-2 cursor-default overflow-hidden whitespace-nowrap text-ellipsis'>
-                                    {!address.isDefault == false ? <button>✅</button> :
-                                        <button>Make Default</button>
+                                    {address.isDefault == true ? <button>✅</button> :
+                                        <button onClick={() => handleMakeDefault(address._id)}>Make Default</button>
                                     }
                                 </div>
                             </div>

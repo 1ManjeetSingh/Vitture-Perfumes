@@ -37,7 +37,7 @@ const Orders = () => {
                     </p>
                     <div className='orders-container w-full h-full flex flex-col gap-4 justify-start items-center overflow-y-auto custom-scrollbar pt-2'>
                         {orderItems.length == 0 ? <div className='flex flex-col w-[60%] h-auto items-center gap-6'>
-                            <img src="./emptycart.png" alt="" style={{objectFit: "contain"}}/>
+                            <img src="./emptyOrders.png" alt="" style={{objectFit: "contain"}}/>
                             <h1>No Order Placed</h1>
                         </div> : orderItems?.map((item) => {
                             return (
