@@ -54,7 +54,7 @@ const Cart = () => {
   const [itemsNo, setItemsNo] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
   const [orderItems, setOrderItems] = useState(null);
-  const { user, exp } = useUser();
+  const { user, exp, logout } = useUser();
 
 
   // add Address before gateway page opening
@@ -98,6 +98,11 @@ const Cart = () => {
           headers: { Authorization: `Bearer ${token?.value}` },
         }
       );
+
+      if(!response.ok){
+        logout();
+      }
+
       const data = await response.json();
       setCartItems(data.cartItems);
       setSuccess(data.success);
@@ -490,7 +495,7 @@ const Cart = () => {
                 </div>
               );
             }) : <div className='flex flex-col w-[30%] h-[75vh] grow-1 items-center gap-2'>
-              <img src="./emptyCart.png" alt="" style={{ objectFit: "contain" }} />
+              <img src="./emptyCart.png" alt="Empty-Cart" style={{ objectFit: "contain" }} />
               <h1 className='text-center'>Your cart is empty</h1>
             </div>}
           </div>
