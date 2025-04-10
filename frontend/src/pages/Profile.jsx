@@ -5,13 +5,12 @@ import { Input, message } from 'antd';
 
 const Profile = () => {
 
-  const { user } = useUser();
+  const { user, exp } = useUser();
 
   const token = JSON.parse(localStorage.getItem("token"));
   
   const [editProfile, setEditProfile] = useState(false);
   const editProfileRef = useRef(null);
-  const now = Date.now();
 
   // to change Name and Email
   const [formData, setFormData] = useState({
@@ -54,7 +53,7 @@ const Profile = () => {
 
       const User = {
         value: user,
-        expiry: now + 3600000, // 1 hour = 3600000 ms
+        expiry: exp, // 1 hour = 3600000 ms
       };
       
       localStorage.setItem("user", JSON.stringify(User))
@@ -131,7 +130,7 @@ const Profile = () => {
 
       const User = {
         value: user,
-        expiry: now + 3600000, // 1 hour = 3600000 ms
+        expiry: exp, // 1 hour = 3600000 ms
       };
       
       localStorage.setItem("user", JSON.stringify(User))

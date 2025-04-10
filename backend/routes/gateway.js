@@ -36,13 +36,12 @@ router.post("/create-order", auth, async (req, res) => {
         userId: req.user._id,
         razorpayOrderId: order.id,
         address,
-        items: orderItems,
-        amount,
-        status: "pending",
+        products : orderItems,
+        totalAmount: amount,
       });
   
       findUser.order.push(storedOrder._id);
-      await findUser.save(); // Make sure to await this
+      await findUser.save();
   
       return res.status(201).json({
         success: true,
@@ -61,4 +60,30 @@ router.post("/create-order", auth, async (req, res) => {
     }
   });  
 
+router.put("/update-payment-status", auth, async (req, res) => {
+    try {
+        const { stat, orderId } = req.body
+        
+        const userFound = await User.findById(req.user._id);
+
+        if (!userFound) return res.status(404).json({ success: false, message: "User not found" });
+
+        const order = await Order.findById(orderId);
+
+        if (!order) return res.status(404).json({ success: false, message: "order not found" });
+
+        if(stat){
+          order.paymentStatus = "Completed";
+        } else{
+          order.paymentStatus = "Failed";
+        }
+
+        await order.save();
+        res.status(200).json({ success: true, message: "successful", order });
+
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Please try again", error: error.message });
+    }
+});
+  
 export default router;

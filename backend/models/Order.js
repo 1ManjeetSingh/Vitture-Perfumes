@@ -1,7 +1,20 @@
 import mongoose from "mongoose";
 
+const AddressSchema = new mongoose.Schema({
+    fullName: { type: String, required: true },
+    mobileNumber: { type: String, required: true, match: /^[0-9]{10}$/ },
+    pincode: { type: String, required: true, match: /^[0-9]{6}$/ },
+    house: { type: String, required: true },
+    area: { type: String, required: true },
+    landmark: { type: String },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    country: { type: String, required: true, default: "India" }, 
+    isDefault: { type: Boolean, default: false },
+});
+
 const OrderSchema = new mongoose.Schema({
-    user: { 
+    userId: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: "User", 
         required: true 
@@ -9,15 +22,19 @@ const OrderSchema = new mongoose.Schema({
 
     products: [
         {
-            product: { 
+            id: { 
                 type: mongoose.Schema.Types.ObjectId, 
                 ref: "ProductDetails", 
                 required: true 
             },
             quantity: { type: Number, required: true, min: 1 },
-            priceAtPurchase: { type: Number, required: true } // Store price at the time of order
         }
     ],
+
+    razorpayOrderId: {
+        type: String,
+        required: true, // set to true if it's always expected
+      },
 
     totalAmount: { type: Number, required: true },
 
@@ -34,7 +51,7 @@ const OrderSchema = new mongoose.Schema({
     }, 
 
     address: { 
-        type: String, 
+        type: AddressSchema, 
         required: true 
     }, // Shipping address
 

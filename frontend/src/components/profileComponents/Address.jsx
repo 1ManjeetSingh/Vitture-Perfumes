@@ -6,16 +6,13 @@ import { message } from "antd";
 const Address = () => {
     const [addAddress, setAddAddress] = useState(false);
     const navigate = useNavigate();
-    const { user } = useUser();
+    const { user, exp } = useUser();
     const token = JSON.parse(localStorage.getItem("token"));
 
     // Move the selected address to the front
     const selected = user?.address.find(addr => addr.isDefault === true);
     const others = user?.address.filter(addr => addr.isDefault === false);
     const [addressArray, setAddressArray] = useState([selected, ...others]);
-
-    const now = Date.now();
-
 
     useEffect(() => {
         if (!user) {
@@ -65,7 +62,7 @@ const Address = () => {
 
             const User = {
                 value: user,
-                expiry: now + 3600000, // 1 hour = 3600000 ms
+                expiry: exp, // 1 hour = 3600000 ms
             };
 
             localStorage.setItem("user", JSON.stringify(User))
@@ -126,7 +123,7 @@ const Address = () => {
             // Update local state (if needed)
             const User = {
                 value: user,
-                expiry: Date.now() + 3600000, // 1 hour = 3600000 ms
+                expiry: exp, // 1 hour = 3600000 ms
             };
 
             localStorage.setItem("user", JSON.stringify(User));

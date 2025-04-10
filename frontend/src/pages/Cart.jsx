@@ -54,16 +54,22 @@ const Cart = () => {
   const [itemsNo, setItemsNo] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
   const [orderItems, setOrderItems] = useState(null);
-  const { user } = useUser();
+  const { user, exp } = useUser();
 
 
   // add Address before gateway page opening
   const selected = user?.address.find(addr => addr.isDefault === true);
   const others = user?.address.filter(addr => addr.isDefault === false);
-  const [addressArray, setAddressArray] = useState([selected, ...others]);
+  const [addressArray, setAddressArray] = useState(null);
   const [defaultAddress, setDefaultAddress] = useState(selected);
   const [editAddress, setEditAddress] = useState(false);
   const editAddressRef = useRef(null);
+
+  useEffect(() => {
+    if (others && selected) {
+      setAddressArray([selected, ...others]);
+    }
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -98,13 +104,11 @@ const Cart = () => {
 
       const checkedItems = data.cartItems.filter(item => item.isChecked !== false);
 
-      console.log(checkedItems);
-
       setOrderItems(checkedItems);
 
     } catch (error) {
-      console.error('Error fetching product data:', error);
-      message.error('Error fetching product data:');
+      console.error('Error fetching cart items:', error);
+      message.error('Error fetching cart items:');
     }
   }
 
@@ -160,7 +164,7 @@ const Cart = () => {
       }
     } catch (error) {
       console.error(error);
-      message.error('Error fetching product data:');
+      message.error('Something went wrong. Please try again.');
     }
   };
 
@@ -187,7 +191,7 @@ const Cart = () => {
       }
     } catch (error) {
       console.error(error);
-      message.error('Error fetching product data:');
+      message.error('Something went wrong. Please try again');
     }
   }
 
@@ -221,7 +225,6 @@ const Cart = () => {
       }
 
       const data = await response.json();
-      console.log(data);
       // if(data.cartItem.isChecked){
       //   const newItem = data.cartItem;
       // setOrderItems((prev)=>[...prev, newItem]);
@@ -233,11 +236,11 @@ const Cart = () => {
     }
   };
 
-  const handleOpenGateway = () =>{
-    if(orderItems.length === 0){
+  const handleOpenGateway = () => {
+    if (orderItems.length === 0) {
       message.warning('Select atleast 1 item')
     }
-    else{
+    else {
       setEditAddress(true);
     }
   }
@@ -261,7 +264,7 @@ const Cart = () => {
       // Update local state (if needed)
       const User = {
         value: user,
-        expiry: Date.now() + 3600000, // 1 hour = 3600000 ms
+        expiry: exp, // 1 hour = 3600000 ms
       };
 
       localStorage.setItem("user", JSON.stringify(User));
@@ -271,10 +274,71 @@ const Cart = () => {
     }
   };
 
+  const handlePaymentStatus = async(stat, orderId)=>{
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/gateway/update-payment-status`,{
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token?.value}`
+        },
+        body: JSON.stringify({ stat, orderId })
+      })
+
+      if(!response.ok){
+        throw new Error("paymentStatus : Failed");
+      }
+
+      const data = await response.json();
+
+      console.log("paymentStatus : Completed");
+      
+    } catch (error) {
+      console.error(error);
+      message.error('Error removing order Items');
+    }
+  }
+
+  const handlePaymentSuccess = async (orderId) => {
+    const hide = message.loading('Wait...');
+    setEditAddress(false);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/cartItems/delete-orderItems`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token?.value}`
+        },
+        body: JSON.stringify({ orderItems })
+      }
+      )
+
+      if (!response.ok) {
+        throw new Error("Something went wrong. Please Wait for some time.");
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        fetchCartItems();
+        handlePaymentStatus(true,orderId);
+        hide();
+        message.success("Thank you. Your order is placed.");
+      } else {
+        message.error(data.message || "Failed to remove items.");
+      }
+    } catch (error) {
+      hide();
+      console.error(error);
+      message.error('Error removing order Items');
+    }
+  };
+
 
   const handleProceedPayment = async () => {
     try {
-      const total = subTotal < 500 ? (subTotal + 40) : subTotal;
+      const total = subTotal < 500 ? subTotal + 40 : subTotal;
 
       const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/gateway/create-order`, {
         method: "POST",
@@ -282,7 +346,11 @@ const Cart = () => {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token?.value}`
         },
-        body: JSON.stringify({ amount: total, address: defaultAddress, orderItems })
+        body: JSON.stringify({
+          amount: total,
+          address: defaultAddress,
+          orderItems: orderItems
+        })
       });
 
       if (!response.ok) {
@@ -292,15 +360,16 @@ const Cart = () => {
       const data = await response.json();
 
       const options = {
-        key: "rzp_test_rYk1KFafMH96WT",
+        key: 'rzp_test_rYk1KFafMH96WT',
         amount: data.amount,
         currency: data.currency,
         order_id: data.orderId,
         handler: function (response) {
-          message.success("Payment successful!");
-          console.log("Payment ID:", response.razorpay_payment_id);
-          console.log("Order ID:", response.razorpay_order_id);
-          console.log("Signature:", response.razorpay_signature);
+          handlePaymentSuccess(data.orderId);
+        },
+        prefill: {
+          name: user?.name || "",
+          email: user?.email || "",
         },
         theme: {
           color: "#3399cc",
@@ -311,6 +380,7 @@ const Cart = () => {
       rzp1.open();
 
       rzp1.on("payment.failed", function (response) {
+        handlePaymentStatus(false,data.orderId);
         message.error("Payment failed");
         console.error(response.error);
       });
@@ -346,7 +416,7 @@ const Cart = () => {
       </div>
 
       <div className={`Cart flex px-6 pt-6 w-[100%] h-[92vh] mx-auto relative ${!user ? "hidden" : ""}`}>
-        <div className={`cart-counter min-w-[320px] h-fit p-4 flex flex-col items-start gap-6 bg-white ${cartItems.length === 0 ? "hidden" : ""}`}>
+        <div className={`cart-counter min-w-[320px] h-fit p-4 flex flex-col items-start gap-6 bg-white ${cartItems && cartItems.length === 0 ? "hidden" : ""}`}>
           <h1 className='text-md sm:text-xl'>Subtotal ({itemsNo} items): <span className='font-bold'>₹{subTotal}</span></h1>
           {subTotal < 500 ? <h1 className='text-sm sm:text-lg'>Delivery: <span className='font-semibold'>₹40</span></h1> : <h1 className='text-sm sm:text-lg'>Delivery: <span className='font-semibold'><del className='font-light'>₹40</del> free delivery ✅</span></h1>}
           <button className='btn-1 rounded-full py-1 w-[95%] text-md border border-[#FFCE12] bg-[#FFCE12] font-semibold' onClick={() => handleOpenGateway()}>Proceed to Buy</button>

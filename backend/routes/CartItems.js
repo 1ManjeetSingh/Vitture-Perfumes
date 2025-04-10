@@ -158,4 +158,29 @@ router.delete("/deleteItem/:id", auth, async (req, res) => {
     }
 });
 
+router.post("/delete-orderItems", auth, async (req, res) => {
+    const { orderItems } = req.body;
+
+    try {
+        const userFound = await User.findById(req.user._id);
+
+        if (!userFound) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Remove each item that matches any ID in orderItems
+        const idsToRemove = orderItems.map(item => item.id.toString());
+
+        userFound.cartItems = userFound.cartItems.filter(item => !idsToRemove.includes(item._id.toString()));
+
+        await userFound.save();
+
+        return res.status(200).json({ success: true, message: "Items deleted from cart" });
+    } catch (error) {
+        console.error("Delete orderItems error:", error);
+        return res.status(500).json({ success: false, message: "Failed to delete items", error: error.message });
+    }
+});
+
+
 export default router;

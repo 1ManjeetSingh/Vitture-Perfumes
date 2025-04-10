@@ -15,9 +15,8 @@ const Reviews = ({ id }) => {
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
     const productId = id;
-    const { user } = useUser();
+    const { user, exp } = useUser();
     const [reviewsLength,setReviewsLength] = useState(2);
-    const now = Date.now();
 
     const fetchReviews = async () => {
         try {
@@ -108,7 +107,7 @@ const Reviews = ({ id }) => {
 
                 const User = {
                     value: user,
-                    expiry: now + 7200000, // 1 hour = 3600000 ms
+                    expiry: exp, // 1 hour = 3600000 ms
                   };
                   
                   localStorage.setItem("user", JSON.stringify(User)) 
