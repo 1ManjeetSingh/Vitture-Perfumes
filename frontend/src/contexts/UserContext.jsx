@@ -9,9 +9,12 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser && (storedUser.expiry >= Date.now())) {
+    const Token = JSON.parse(localStorage.getItem("token"));
+
+    if (!Token || !storedUser || (Token.expiry < Date.now())) {
+      logout();
+    } else if (storedUser && (storedUser.expiry >= Date.now())) {
       setUser(storedUser.value);
-      setExpiry(storedUser.expiry);
     }
   }, []);
 
@@ -40,7 +43,6 @@ export const UserProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    setExpiry(null);
     localStorage.removeItem("user");
     localStorage.removeItem("token");
   };
