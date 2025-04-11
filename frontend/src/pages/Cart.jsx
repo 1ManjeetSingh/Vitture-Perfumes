@@ -109,6 +109,8 @@ const Cart = () => {
 
       const checkedItems = data.cartItems.filter(item => item.isChecked !== false);
 
+      console.log(checkedItems);
+      
       setOrderItems(checkedItems);
 
     } catch (error) {
@@ -280,6 +282,9 @@ const Cart = () => {
   };
 
   const handlePaymentStatus = async(stat, orderId)=>{
+
+    console.log("handlePaymentStatus", stat, orderId);
+
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/gateway/update-payment-status`,{
         method: 'PUT',
@@ -300,7 +305,7 @@ const Cart = () => {
       
     } catch (error) {
       console.error(error);
-      message.error('Error removing order Items');
+      message.error('paymentStatus : Failed');
     }
   }
 
@@ -327,9 +332,11 @@ const Cart = () => {
 
       if (data.success) {
         fetchCartItems();
-        handlePaymentStatus(true,orderId);
         hide();
         message.success("Thank you. Your order is placed.");
+
+        handlePaymentStatus(true,orderId);
+
       } else {
         message.error(data.message || "Failed to remove items.");
       }
@@ -370,7 +377,7 @@ const Cart = () => {
         currency: data.currency,
         order_id: data.orderId,
         handler: function (response) {
-          handlePaymentSuccess(data.orderId);
+          handlePaymentSuccess(data.DB_OrderId);
         },
         prefill: {
           name: user?.name || "",
@@ -385,7 +392,10 @@ const Cart = () => {
       rzp1.open();
 
       rzp1.on("payment.failed", function (response) {
-        handlePaymentStatus(false,data.orderId);
+        
+        setEditAddress(false);
+        handlePaymentStatus(false,data.DB_OrderId);
+
         message.error("Payment failed");
         console.error(response.error);
       });

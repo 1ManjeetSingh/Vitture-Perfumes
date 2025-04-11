@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import ProductDetails from "./ProductDetails.js";
+import User from "./User.js";
 
 const AddressSchema = new mongoose.Schema({
     fullName: { type: String, required: true },
@@ -27,6 +29,15 @@ const OrderSchema = new mongoose.Schema({
                 ref: "ProductDetails", 
                 required: true 
             },
+            itemName:{
+                type: String,
+                required: true 
+            },
+            image:{
+                type: mongoose.Schema.Types.ObjectId, ref: 'fs.files'
+            },
+            price:{ type: Number, required: true },
+            discount: { type: Number, required: true },
             quantity: { type: Number, required: true, min: 1 },
         }
     ],
@@ -40,8 +51,8 @@ const OrderSchema = new mongoose.Schema({
 
     paymentStatus: { 
         type: String, 
-        enum: ["Pending", "Completed", "Failed"], 
-        default: "Pending" 
+        enum: ["Completed", "Failed"], 
+        default: "Failed" 
     }, 
 
     orderStatus: { 
